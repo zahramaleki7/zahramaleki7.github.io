@@ -77,6 +77,11 @@ a.card:hover{transform:translateY(-2px); border-color:var(--k)}
 .card .ttl,.card .one,.tool .ttl,.tool .one{display:block}
 .card .ttl{font-size:1.08rem; font-weight:700; line-height:1.5; margin-bottom:.12rem}
 .card .one{font-size:.88rem; color:var(--mut); line-height:1.75}
+.card .meta,.tool .meta{display:block; font-size:.78rem; color:var(--mut); opacity:.85;
+  margin-top:.3rem; font-variant-numeric:tabular-nums}
+.start{background:var(--surf2); border:1px solid var(--rule); border-radius:12px;
+  padding:.95rem 1.15rem; font-size:.88rem; color:var(--ink2); line-height:1.85; margin-bottom:1.6rem}
+.start b{color:var(--ink)}
 .card .go{font-size:1.3rem; color:var(--k); opacity:.55}
 a.card:hover .go{opacity:1}
 .card.soon{opacity:.55; box-shadow:none}
@@ -121,6 +126,13 @@ footer{margin-top:3.4rem; padding-top:1.4rem; border-top:1px solid var(--rule);
   </p>
 </header>
 
+<div class="start">
+  <b>از کجا شروع کنم؟</b> اول جزوهٔ فصل را یک‌بار بخوانید — بدون های‌لایت.
+  بعد بروید سراغ <b>بستهٔ مرور</b>: کارت مرور همان فصل را ببندید و از حافظه بازگو کنید،
+  فلش‌کارت‌ها را بزنید، و آخر پرسش‌ها را <b>بنویسید</b> و بعد با کلید مقایسه کنید.
+  <b>تلفظ‌یار</b> را هم موازی پیش ببرید، روزی ده دقیقه.
+</div>
+
 <h2>بخش یکم — سازمان کلی مغز</h2>
 <div class="grid">
 
@@ -129,6 +141,7 @@ footer{margin-top:3.4rem; padding-top:1.4rem; border-top:1px solid var(--rule);
     <span class="body">
       <span class="ttl">مغز و رفتار</span>
       <span class="one">کارکردهای ذهنی به مدارهای مشخص تقسیم می‌شوند — اما هیچ کارکردی در یک نقطه جای نمی‌گیرد.</span>
+      <span class="meta">۵۲ صفحه · ۸ شکل · حدود ۹۰ دقیقه</span>
     </span>
     <span class="go" aria-hidden="true">‹</span>
   </a>
@@ -174,11 +187,22 @@ footer{margin-top:3.4rem; padding-top:1.4rem; border-top:1px solid var(--rule);
 <h2>ابزارها</h2>
 <div class="grid">
 
+  <a class="tool" href="review.html">
+    <span class="ic" aria-hidden="true">🗂</span>
+    <span class="body">
+      <span class="ttl">بستهٔ مرور و خودآزمایی</span>
+      <span class="one">نقشهٔ کلان پنج فصل، ۱۰۰ فلش‌کارت، کلید پاسخ ۸۱ پرسش، ویگنت‌های بالینی، واژه‌نامه و برنامهٔ مرور ۳۰ روزه.</span>
+      <span class="meta">فلش‌کارت‌ها و پاسخ‌ها تعاملی‌اند — جواب تا نزنید پیدا نیست</span>
+    </span>
+    <span class="go" aria-hidden="true">‹</span>
+  </a>
+
   <a class="tool" href="pronunciation.html">
     <span class="ic" aria-hidden="true">🔊</span>
     <span class="body">
       <span class="ttl">تلفظ‌یار</span>
       <span class="one">۲۲۱ اصطلاح با آوانگاری، استرس مشخص‌شده، پخش صدا، انتخاب لهجه و ردیابی پیشرفت.</span>
+      <span class="meta">حالت تمرین دوزبانه · پیشرفت ذخیره می‌شود</span>
     </span>
     <span class="go" aria-hidden="true">‹</span>
   </a>

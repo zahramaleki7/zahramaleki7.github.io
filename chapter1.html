@@ -507,15 +507,14 @@
   position:fixed; z-index:61; top:.85rem; inset-inline-end:.85rem;
   display:flex; gap:.4rem;
 }
-#tools button,#tools a{
+#tools button{
   width:2.35rem; height:2.35rem; border-radius:50%;
   border:1px solid var(--rule); background:var(--surface); color:var(--muted);
   display:grid; place-items:center; cursor:pointer; font-size:1rem;
   box-shadow:0 2px 10px -4px rgba(0,0,0,.28);
 }
-#tools a{text-decoration:none;font-size:1.2rem}
-#tools button:hover,#tools a:hover{ color:var(--accent); border-color:var(--accent); }
-#tools button:focus-visible,#tools a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+#tools button:hover{ color:var(--accent); border-color:var(--accent); }
+#tools button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
 #toc{
   position:fixed; z-index:62; inset-block:0; inset-inline-end:0;
@@ -545,13 +544,95 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
 @media print{
   #bar,#tools,#toc,#scrim{ display:none !important; }
 }
+
+/* ---- figure lightbox ---- */
+@media screen{
+  figure.fig img{ cursor:zoom-in; }
+  figure.fig{ position:relative }
+  .zhint{ position:absolute; inset-block-start:.5rem; inset-inline-end:.5rem;
+    background:rgba(20,30,38,.72); color:#fff; font-size:.72rem; border-radius:99px;
+    padding:.12rem .6rem; pointer-events:none; opacity:0; transition:opacity .15s }
+  figure.fig:hover .zhint{ opacity:1 }
+}
+#lb{ position:fixed; inset:0; z-index:90; display:none; background:rgba(6,10,13,.93);
+     align-items:center; justify-content:center; padding:1rem; }
+#lb.on{ display:flex }
+#lb img{ max-width:100%; max-height:88vh; border-radius:6px; background:#fff;
+         cursor:zoom-in; transition:transform .18s ease; transform-origin:center; }
+#lb img.z{ cursor:zoom-out; max-width:none; max-height:none; width:auto; }
+#lb .wrapimg{ overflow:auto; max-width:100%; max-height:88vh; display:grid; place-items:center }
+#lb .cap{ position:absolute; inset-block-end:1rem; inset-inline:1rem;
+  text-align:center; color:#c9d4dc; font-size:.8rem; }
+#lb .x{ position:absolute; inset-block-start:1rem; inset-inline-end:1rem;
+  width:2.4rem; height:2.4rem; border-radius:50%; border:1px solid #3a4750;
+  background:rgba(20,30,38,.8); color:#e3eaf0; font-size:1.3rem; cursor:pointer;
+  display:grid; place-items:center; }
+#lb .x:hover{ background:#2a353d }
+@media print{ #lb,.zhint{ display:none !important } }
+
 @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+
+/* ---------- teaching additions ---------- */
+.sum5{ border:1px solid var(--accent); border-radius:14px; overflow:hidden;
+  margin:1.8em 0 2.2em; background:var(--accent-soft); }
+.s5-head{ display:flex; align-items:center; gap:.6rem; padding:.6rem .95rem;
+  border-bottom:1px solid var(--accent); }
+.s5-tag{ font-weight:700; font-size:.82rem; letter-spacing:.06em; color:var(--accent); flex:1 }
+.s5-tog{ border:1px solid var(--accent); background:transparent; color:var(--accent);
+  border-radius:7px; padding:.14rem .6rem; font:inherit; font-size:.76rem; cursor:pointer }
+.s5-tog:hover{ background:var(--accent); color:#fff }
+.s5-body{ padding:1rem 1.15rem .3rem; font-size:.95rem; line-height:1.95 }
+.s5-body p{ text-indent:0; margin-bottom:.75em }
+.sum5.shut .s5-body{ display:none }
+.s5-one{ background:var(--surface); border-radius:10px; padding:.8rem 1rem;
+  margin:.4rem 0 1rem; font-size:.94rem; line-height:1.9; border-inline-start:3px solid var(--accent) }
+
+.qz{ border:1px dashed var(--accent); border-radius:12px; padding:.9rem 1.1rem .5rem;
+  margin:1.9em 0; background:var(--surface) }
+.qz-h{ font-weight:700; color:var(--accent); font-size:.88rem; margin-bottom:.7rem }
+.qz-i{ border-top:1px solid var(--rule); padding:.65rem 0 }
+.qz-i:first-of-type{ border-top:none; padding-top:0 }
+.qz-q{ font-weight:600; font-size:.94rem; line-height:1.85; cursor:pointer; position:relative;
+  padding-inline-end:1.4rem }
+.qz-q::after{ content:'▾'; position:absolute; inset-inline-end:0; inset-block-start:.35em;
+  font-size:.75rem; color:var(--muted); transition:transform .15s ease }
+.qz-i.open .qz-q::after{ transform:rotate(180deg) }
+.qz-a{ display:none; margin-top:.5rem; font-size:.9rem; line-height:1.9; color:var(--ink);
+  background:var(--box); border-radius:9px; padding:.65rem .85rem }
+.qz-i.open .qz-a{ display:block }
+
+.deep{ background:var(--box); border:1px solid var(--box-rule); border-radius:12px;
+  padding:.95rem 1.15rem .4rem; margin:1.7em 0 }
+.deep .d-t{ font-weight:700; color:var(--accent); font-size:.95rem; margin-bottom:.6rem; line-height:1.7 }
+.deep p{ text-indent:0; font-size:.93rem; line-height:1.92 }
+.deep .d-chk{ border-top:1px solid var(--box-rule); padding-top:.6rem; margin-top:.3rem }
+.lat{ font-family:'Segoe UI',system-ui,Arial,sans-serif; direction:ltr; unicode-bidi:isolate }
+
+/* ---------- glossary popover ---------- */
+.gl{ border-bottom:1px dotted currentColor; cursor:help }
+#pop{ position:absolute; z-index:95; max-width:19rem; background:var(--surface);
+  border:1px solid var(--rule); border-radius:12px; padding:.7rem .85rem;
+  box-shadow:0 14px 36px -18px rgba(0,0,0,.55); display:none; font-size:.88rem; line-height:1.8 }
+#pop.on{ display:block }
+#pop .w{ font-family:'Segoe UI',system-ui,Arial,sans-serif; direction:ltr; unicode-bidi:isolate;
+  font-weight:700; font-size:1rem }
+#pop .ipa{ font-family:'Charis SIL','Cambria','Times New Roman',serif; direction:ltr;
+  unicode-bidi:isolate; color:var(--muted); font-size:.9rem }
+#pop .syl{ font-family:'Segoe UI',system-ui,Arial,sans-serif; direction:ltr; unicode-bidi:isolate;
+  font-size:.82rem; color:var(--muted) }
+#pop .syl b{ color:var(--accent) }
+#pop .fa{ margin-top:.25rem }
+#pop .pl{ margin-top:.5rem; border:1px solid var(--rule); background:transparent;
+  border-radius:7px; padding:.16rem .6rem; font:inherit; font-size:.78rem;
+  color:var(--accent); cursor:pointer }
+#pop .pl:hover{ background:var(--accent); color:#fff; border-color:var(--accent) }
+@media print{ .qz-a{ display:block !important } .sum5.shut .s5-body{ display:block !important }
+  .s5-tog,#pop{ display:none !important } .gl{ border-bottom:none } }
 </style>
 </head>
 <body>
 <div id="bar"></div>
 <div id="tools">
-  <a id="bhome" href="./" aria-label="کتابخانه" title="بازگشت به کتابخانه">⌂</a>
   <button id="btoc" aria-label="فهرست مطالب" title="فهرست مطالب">☰</button>
   <button id="bth" aria-label="روشن یا تیره" title="روشن / تیره">◐</button>
 </div>
@@ -671,6 +752,51 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
 </div>
 
 
+
+<section class="sum5">
+  <div class="s5-head">
+    <span class="s5-tag">خلاصهٔ پنج‌دقیقه‌ای</span>
+    <button class="s5-tog" type="button">پنهان کن</button>
+  </div>
+  <div class="s5-body">
+    <p><b>پرسش فصل یک جمله است:</b> ذهن از کجا می‌آید؟ پاسخی که دو قرن شواهد به آن رسیده،
+    این است که ذهن حاصل کارِ مغز است. باقی فصل، داستانِ اثبات همین جمله است.</p>
+
+    <p>سرِ راه، دو اردوگاه با هم جنگیدند و <b>هر دو نصفه‌درست بودند</b>.
+    <b>گال</b> می‌گفت هر توانایی ذهنی جای مشخصی در قشر دارد — ایده‌اش درست بود، ولی روشش
+    (خواندنِ برجستگی‌های جمجمه، بدون هیچ آزمونی) فاجعه بود.
+    <b>فلورانس</b> درست نقد کرد اما با ضایعه‌های درشت در جانور و تکالیفی که نقص اختصاصی را
+    نشان نمی‌دادند، به نتیجهٔ غلطِ «مغز یک کلِ تفکیک‌ناپذیر است» رسید.</p>
+
+    <p><b>داوری از بالین انسان آمد، نه از آزمایشگاه.</b> بروکا (۱۸۶۱) بیماری را دید که
+    می‌فهمید اما نمی‌توانست حرف بزند؛ ورنیکه (۱۸۷۶) بیماری را دید که روان حرف می‌زد اما
+    نمی‌فهمید. دو نقص متفاوت از دو ضایعهٔ متفاوت — دقیقاً همان چیزی که کل‌نگری پیش‌بینی نمی‌کرد.</p>
+
+    <p>ورنیکه چیز مهم‌تری هم افزود: کارکردهای پیچیده در <b>شبکه</b> انجام می‌شوند، نه در یک نقطه.
+    از همین مدل، نوع سومی از زبان‌پریشی را <b>پیش‌بینی</b> کرد — نقصِ فقط در تکرار، از آسیبِ
+    رشته‌های رابط. بعدها چنین بیمارانی پیدا شدند. مدلی که پیش‌بینیِ آزمون‌پذیر می‌دهد،
+    از توصیفِ صرف بسیار قوی‌تر است.</p>
+
+    <p>بینایی همین درس را تکرار کرد: مسیر <b>«چه»</b> (شکمی، بازشناسی) و مسیر
+    <b>«چگونه»</b> (پشتی، هدایت عمل)، و پردازشِ موازیِ رنگ و شکل و حرکت.
+    ادراکِ یکپارچه‌ای که تجربه می‌کنید، <em>ساختهٔ</em> مغز است، نه چیزی که آماده وارد شود.</p>
+
+    <p>و بیماران <b>مغز دونیم‌شده</b> ناخوشایندترین یافته را دادند: نیمکرهٔ چپ برای رفتاری که
+    خودش آغاز نکرده توضیح می‌سازد و به آن باور دارد. یعنی بخش بزرگی از پردازش مغز ناهشیار است،
+    و «دلیل»‌هایی که برای کارهایمان می‌آوریم گاهی بازسازیِ پس‌از‌واقعه‌اند.</p>
+
+    <p>زیر همهٔ این‌ها یک کشف سلولی نشسته است: <b>آموزهٔ نورونی</b> کاخال — مغز از سلول‌های
+    مجزا ساخته شده، نه از شبکه‌ای پیوسته. اگر این نبود، «تغییر در اتصال» بی‌معنا می‌شد و
+    هیچ نظریه‌ای دربارهٔ یادگیری نمی‌شد ساخت.</p>
+
+    <div class="s5-one">
+      <b>اگر فقط یک جمله از این فصل بماند:</b>
+      کارکردهای ذهنی به عملیات‌های ساده‌تر تجزیه می‌شوند، هر عملیات در مدار مشخصی انجام می‌شود،
+      و کارکردِ کامل از هماهنگیِ چند مدارِ توزیع‌شده و تا حدی جایگزین‌پذیر برمی‌آید —
+      <b>مدولار بودن با افزونگی</b>.
+    </div>
+  </div>
+</section>
   <h3>دو دیدگاه متقابل دربارهٔ رابطهٔ مغز و رفتار مطرح شده است</h3>
 
   <p>دیدگاه‌های ما دربارهٔ سلول‌های عصبی، مغز و رفتار در سدهٔ بیستم از ترکیب پنج سنت تجربی پدید آمد: تشریح، جنین‌شناسی، فیزیولوژی، داروشناسی و روان‌شناسی.</p>
@@ -783,7 +909,23 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
     <div class="box-title">کادر ۱–۱ | اصطلاحات جهت‌یابی در عصب‌کالبدشناسی</div>
     <p class="noindent">مکان و جهت اجزای دستگاه عصبی مرکزی در بدن با ارجاع به سه محور توصیف می‌شود: محور منقاری–دمی <span class="en">(rostral–caudal)</span>، محور پشتی–شکمی <span class="en">(dorsal–ventral)</span> و محور میانی–جانبی <span class="en">(medial–lateral)</span> (شکل ۱–۲). این اصطلاحات به عصب‌کالبدشناس امکان می‌دهند روابط فضایی میان بخش‌های مغز و نخاع را توصیف کند. آن‌ها مقایسهٔ مغز افراد یک گونه را در جریان رشد یا در شرایط بیماری آسان می‌کنند و همچنین مقایسهٔ مغز گونه‌های جانوری مختلف را — برای نمونه به‌منظور فهم تکامل مغز — ممکن می‌سازند.</p>
 
-    <h4>الف. محورهای منقاری–دمی و پشتی–شکمی</h4>
+  <div class="deep"><div class="d-t">اینجا معمولاً گیر می‌کنند: چرا محورها در انسان خم می‌شوند؟</div>
+<p>این تنها جای فصل است که اگر یک بار درست نفهمید، تا آخر کتاب اذیتتان می‌کند — چون همهٔ
+توصیف‌های تشریحی بعدی روی همین محورها سوارند.</p>
+<p><b>مشکل از کجاست:</b> این نام‌ها برای جانورِ چهارپا ساخته شده‌اند. در موش، بدن و مغز
+روی یک خطِ افقی‌اند: <span class="lat">rostral</span> یعنی به‌سوی بینی، <span class="lat">caudal</span>
+یعنی به‌سوی دم، <span class="lat">dorsal</span> یعنی به‌سوی پشت، <span class="lat">ventral</span>
+یعنی به‌سوی شکم. ساده و بی‌ابهام.</p>
+<p><b>چه اتفاقی افتاد:</b> در انسان دو چیز عوض شد — بدن ایستاده شد، و مغزِ پیشین نسبت به
+ساقهٔ مغز به جلو خم شد. حالا یک محور نداریم، دو محور داریم که به هم زاویه دارند:
+محورِ نخاع و ساقهٔ مغز تقریباً <b>عمودی</b>، و محورِ مغزِ پیشین تقریباً <b>افقی</b>.</p>
+<p><b>راه حفظ‌نکردن:</b> به‌جای جهت‌های جغرافیایی، یک مسیرِ خمیده تصور کنید که از نخاع بالا
+می‌آید و در مغز به جلو می‌پیچد — مثل یک عصای شکسته. «منقاری» همیشه یعنی <em>در امتداد این
+مسیر، به‌سوی سر</em>؛ «شکمی» همیشه یعنی <em>سمت شکمِ آن مسیر</em>. با این تصویر، هم در
+نخاع درست درمی‌آید (شکمی = جلو) و هم در مغز پیشین (شکمی = پایین).</p>
+<p class="d-chk"><b>محکِ سریع:</b> اگر گفتند «هستهٔ شکمیِ تالاموس»، بدون مکث بگویید سمت
+پایین. اگر گفتند «شاخ شکمیِ نخاع»، بگویید سمت جلو. اگر مکث کردید، همین جعبه را دوباره بخوانید.</p>
+</div>  <h4>الف. محورهای منقاری–دمی و پشتی–شکمی</h4>
     <p class="noindent">منقاری یعنی به‌سوی بینی و دمی یعنی به‌سوی دُم. پشتی یعنی به‌سوی پشتِ جانور و شکمی یعنی به‌سوی شکم. در پستانداران فروتر، جهت‌گیری این دو محور در سراسر رشد تا بزرگ‌سالی ثابت می‌ماند. در انسان و دیگر نخستی‌سانان عالی، محور طولی در ساقهٔ مغز حدود ۱۱۰ درجه خم می‌شود. به‌سبب این خمیدگی، اصطلاحات مکانیِ یکسان برای ساختارهای زیر و بالای خمیدگی معنای متفاوتی دارند. زیر خمیدگی، یعنی در نخاع، منقاری یعنی به‌سوی سر، دمی یعنی به‌سوی دنبالچه (انتهای پایینی ستون فقرات)، شکمی (قدامی) یعنی به‌سوی شکم و پشتی (خلفی) یعنی به‌سوی پشت. بالای خمیدگی، منقاری یعنی به‌سوی بینی، دمی یعنی به‌سوی پشت سر، شکمی یعنی به‌سوی فک و پشتی یعنی به‌سوی بالای سر. اصطلاح فوقانی <span class="en">(superior)</span> غالباً هم‌معنای پشتی و تحتانی <span class="en">(inferior)</span> هم‌معنای شکمی به کار می‌رود.</p>
 
     <h4>ب. محور میانی–جانبی</h4>
@@ -817,7 +959,20 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
 <tr><td>شکمی</td><td>به‌سوی شکم</td><td>به‌سوی فک</td></tr>
 </table>
 <div class="analogy"><span class="a-lbl">تشبیه ساده:</span> یک لولهٔ انعطاف‌پذیر را تصور کنید که سرش رو به جلو خم شده است.
-«بالای لوله» در بخش صاف یعنی پشت، ولی در بخش خم‌شده یعنی بالای سر. اسم‌ها عوض نشده‌اند؛ خودِ لوله چرخیده است.</div>
+«بالای لوله» در بخش صاف یعنی پشت، ولی در بخش خم‌شده یعنی بالای سر. اسم‌ها عوض نشده‌اند؛ خودِ لوله چرخیده است.</div><div class="deep"><div class="d-t">اینجا معمولاً گیر می‌کنند: «فعال» با «ضروری» یکی نیست</div>
+<p>این تمایز، مهم‌ترین درسِ روش‌شناختیِ کل فصل است و در فصل ۵ دوباره با نام دیگری برمی‌گردد
+(اپتوژنتیک در برابر ثبت الکتریکی).</p>
+<p><b>تشبیه روزمره:</b> فرض کنید می‌خواهید بفهمید کدام قطعهٔ ماشین برای حرکت لازم است.
+یک روش: موتور را روشن کنید و ببینید چه چیزی گرم می‌شود یا می‌چرخد. رادیاتور گرم می‌شود،
+پروانه می‌چرخد، چراغ‌ها روشن‌اند. این <b>«فعال»</b> است. روش دوم: هر قطعه را جدا کنید و
+ببینید ماشین باز هم راه می‌رود یا نه. چراغ را دربیاورید، ماشین می‌رود. این <b>«ضروری»</b> است.</p>
+<p><b>چرا اشتباه گرفتنشان خطرناک است:</b> بسیاری از تیترهای علمیِ عمومی («ناحیهٔ عشق در مغز
+پیدا شد») از fMRI می‌آیند، که فقط «فعال» را می‌سنجد. فعالیتِ همراه می‌تواند از توجه باشد،
+از تلاش، از اضطراب، یا از بازداریِ پاسخِ رقیب — هیچ‌کدام یعنی آن ناحیه برای آن کارکرد لازم است.</p>
+<p class="d-chk"><b>در پاسخ امتحانی:</b> هر ادعای مکان‌یابی به <b>دو</b> شاهد نیاز دارد —
+از کار افتادن با ضایعه، و فعال شدن هنگام کارکرد. اگر فقط یکی را داشتید، همان را بنویسید و
+حدّ آن را هم بنویسید.</p>
+</div>
 <h5>سه صفحهٔ برش</h5>
 <ul>
 <li><b>سهمی:</b> مثل برش خیار از سر تا دُم، در راستای خط وسط ← دو نیمهٔ چپ و راست.</li>
@@ -830,7 +985,7 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
   </div>
 </section>
 <section>
-  <h3>مغز نواحی کارکردیِ متمایز دارد</h3>
+<section class="qz"><div class="qz-h">یک لحظه صبر کنید — این‌ها را بلدید؟</div><div class="qz-i"><div class="qz-q">گال چه چیزی را درست دید و چه چیزی را غلط؟</div><div class="qz-a">ایده‌اش درست بود: کارکردهای ذهنی در نواحی مشخصی از قشر جای دارند. روشش غلط بود — از برجستگی جمجمه به کارکرد مغز نتیجه گرفت، فرضیه‌اش را هرگز آزمون نکرد، و موارد ناقض را کنار گذاشت. به‌علاوه مقوله‌هایش («جاه‌طلبی»، «امیدواری») مقوله‌های روان‌شناسیِ عامیانه بودند، نه عملیات‌های تجزیه‌پذیرِ ذهنی.</div></div><div class="qz-i"><div class="qz-q">چرا در موش محور منقاری–دمی یک خط راست است اما در انسان خم می‌شود؟</div><div class="qz-a">چون در تکامل انسان، مغز پیشین نسبت به ساقهٔ مغز به جلو و پایین خم شده است. در جانور چهارپا محور بدن و محور مغز تقریباً یک خط‌اند؛ در انسانِ ایستاده، محورِ نخاع عمودی است ولی محورِ مغزِ پیشین تقریباً افقی. برای همین «شکمی» در ساقهٔ مغز یعنی پایین، اما در مغز پیشین یعنی جلو-پایین.</div></div><div class="qz-i"><div class="qz-q">خطای روش‌شناختی فلورانس چه بود؟</div><div class="qz-a">ضایعه‌های بزرگ و غیراختصاصی در جانور، و تکالیفی که آن‌قدر درشت بودند که نقصِ اختصاصی را آشکار نمی‌کردند. وقتی ابزار سنجش شما زمخت باشد، همه‌چیز یکنواخت به‌نظر می‌رسد — و این را با «مغز یکنواخت است» اشتباه گرفت.</div></div></section>  <h3>مغز نواحی کارکردیِ متمایز دارد</h3>
 
   <p>دستگاه عصبی مرکزی ساختاری دوطرفه و تا حد زیادی متقارن است که دو بخش اصلی دارد: نخاع و مغز. مغز از شش ساختار عمده تشکیل شده است: بصل‌النخاع <span class="en">(medulla oblongata)</span>، پل مغزی <span class="en">(pons)</span>، مخچه، مغز میانی، دیانسفال و مخ (کادر ۱–۲ و شکل ۱–۳). هر یک از این‌ها خود از گروه‌های متمایزی از نورون‌ها با اتصالات و خاستگاه رشدیِ ویژه ساخته شده‌اند. در بصل‌النخاع، پل مغزی، مغز میانی و دیانسفال، نورون‌ها اغلب در خوشه‌های متمایزی به نام هسته <span class="en">(nuclei)</span> گرد هم می‌آیند. سطح مخ و مخچه از ورقه‌ای بزرگ و تاخورده از نورون‌ها تشکیل شده است که به‌ترتیب قشر مخ و قشر مخچه نامیده می‌شود؛ جایی که نورون‌ها در لایه‌هایی با الگوهای اتصالیِ کلیشه‌ای سازمان یافته‌اند. مخ همچنین شماری ساختار زیر قشری <span class="en">(subcortical)</span> در بر دارد، از جمله عقده‌های قاعده‌ای <span class="en">(basal ganglia)</span> و آمیگدال (شکل ۱–۴).</p>
 
@@ -948,7 +1103,7 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
 
 </section>
 <section>
-  <h3>نخستین شواهد استوار برای موضعی بودن توانایی‌های شناختی از مطالعهٔ اختلالات زبان به دست آمد</h3>
+<section class="qz"><div class="qz-h">خودآزمایی این بخش</div><div class="qz-i"><div class="qz-q">تفاوت «ناحیهٔ ضروری» و «ناحیهٔ فعال» را با یک مثال بگویید.</div><div class="qz-a"><b>ضروری:</b> با نبودش کارکرد از بین می‌رود — شاهدش ضایعه یا مهار موقت است. <b>فعال:</b> هنگام تکلیف روشن می‌شود — شاهدش تصویربرداری. یک ناحیه می‌تواند فعال باشد چون <em>همراهِ</em> تکلیف است (توجه، تلاش، بازداری پاسخ) بی‌آنکه برای خودِ عملیات لازم باشد. پس از fMRI هرگز نمی‌توان «ضرورت» نتیجه گرفت.</div></div><div class="qz-i"><div class="qz-q">چرا آزمایش ماز لشلی شاهدی به سود کل‌نگری نبود؟</div><div class="qz-a">چون ماز تکلیفی <b>چندحسی و چندراهبردی</b> است: موش می‌تواند با بینایی، بویایی، لمس سبیل‌ها یا حافظهٔ حرکتی حلش کند. وقتی چند مسیر مستقل به یک هدف می‌رسند، هر ضایعه‌ای یکی از آن‌ها را می‌برد و عملکرد را کمی پایین می‌آورد — الگویی که با <b>افزونگی</b> کاملاً سازگار است و هیچ‌چیزی دربارهٔ تفکیک‌ناپذیری مغز نمی‌گوید.</div></div></section>  <h3>نخستین شواهد استوار برای موضعی بودن توانایی‌های شناختی از مطالعهٔ اختلالات زبان به دست آمد</h3>
 
   <p>نخستین نواحی قشر مخ که برای شناخت مهم شناخته شدند، نواحی مرتبط با زبان بودند. این کشف‌ها از مطالعهٔ زبان‌پریشی <span class="en">(aphasia)</span> برآمدند؛ اختلالی زبانی که بیشتر هنگامی رخ می‌دهد که نواحی معینی از بافت مغز بر اثر سکته — یعنی انسداد یا پارگی رگی که بخشی از یک نیمکرهٔ مخ را خون‌رسانی می‌کند — از میان می‌رود. بسیاری از کشف‌های مهم در مطالعهٔ زبان‌پریشی در نیمهٔ دوم سدهٔ نوزدهم و پشت سر هم رخ دادند. این پیشرفت‌ها روی‌هم یکی از هیجان‌انگیزترین و مهم‌ترین فصل‌های مطالعهٔ عصب‌شناختی رفتار انسان را می‌سازند.</p>
 
@@ -1012,7 +1167,20 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
   </div>
 </section>
 <section>
-  <p>با آنکه شواهد زیستی برای وجود نواحی کارکردیِ مجزا در قشر قانع‌کننده بود، تا سال ۱۹۵۰ دیدگاه‌های کل‌نگر دربارهٔ مغز همچنان بر اندیشهٔ تجربی و عمل بالینی چیرگی داشتند. این وضعیت شگفت‌آور تا حد زیادی مدیون چند دانشمند برجستهٔ علوم اعصاب بود که از دیدگاه کل‌نگر دفاع می‌کردند؛ از جمله هنری هد <span class="en">(Henry Head)</span>، عصب‌شناس بریتانیایی، ایوان پاولوف <span class="en">(Ivan Pavlov)</span>، فیزیولوژیست رفتاری روس، و کارل لشلی <span class="en">(Karl Lashley)</span>، روان‌شناس آمریکایی.</p>
+  <p>با آنکه شواهد زیستی برای وجود نواحی کارکردیِ مجزا در قشر قانع‌کننده بود، تا سال ۱۹۵۰ دیدگاه‌های کل‌نگر دربارهٔ مغز همچنان بر اندیشهٔ تجربی و عمل بالینی چیرگی داشتند. این وضعیت شگفت‌آور تا حد زیادی مدیون چند دانشمند برجستهٔ علوم اعصاب بود که از دیدگاه کل‌نگر دفاع می‌کردند؛ از جمله هنری هد <span class="en">(Henry Head)</span>، عصب‌شناس بریتانیایی، ایوان پاولوف <span class="en">(Ivan Pavlov)</span>، فیزیولوژیست رفتاری روس، و کارل لشلی <span class="en">(Karl Lashley)</span>، روان‌شناس آمریکایی.</p><div class="deep"><div class="d-t">اینجا معمولاً گیر می‌کنند: چرا نتیجهٔ لشلی گمراه‌کننده بود؟</div>
+<p>لشلی کارِ دقیقی کرد و نتیجهٔ اشتباهی گرفت. فهمِ اینکه <em>چرا</em>، بیشتر از خودِ آزمایش می‌ارزد.</p>
+<p><b>آنچه دید:</b> هرچه قشرِ بیشتری از موش برداشت، عملکردِ ماز بدتر شد — و مهم نبود کجای
+قشر را بردارد. نتیجه گرفت: قشر یک تودهٔ هم‌ارز است.</p>
+<p><b>آنچه ندید:</b> ماز یک تکلیف نیست، چند تکلیفِ موازی است. موش می‌تواند با بینایی مسیر را
+به یاد بسپارد، یا با بویایی، یا با لمس سبیل‌ها، یا با شمردنِ پیچ‌ها. اگر چهار راهِ مستقل به
+یک هدف برسد، برداشتنِ هر کدام فقط <em>کمی</em> از توانِ کل کم می‌کند — و چون هر ضایعه‌ای
+احتمالاً یکی از این چهار را می‌زند، اثر با <b>مقدار</b> بافت متناسب می‌شود، نه با <b>محل</b>.</p>
+<p><b>تشبیه:</b> اگر از خانه تا دانشگاه چهار مسیر داشته باشید، بستن هر خیابانی سفرتان را
+کمی کندتر می‌کند و هیچ خیابانی «خیابانِ حیاتی» به‌نظر نمی‌رسد. از این نمی‌شود نتیجه گرفت
+که شهر نقشه ندارد.</p>
+<p class="d-chk"><b>درسِ عمومی:</b> وقتی تکلیفِ سنجش، چند مسیرِ جایگزین دارد، ضایعه
+نمی‌تواند تخصص را آشکار کند. با تکالیفِ اختصاصی‌تر، همان قشر تفکیکِ کارکردیِ روشنی نشان می‌دهد.</p>
+</div>
 
   <p>پرنفوذترین آنان لشلی بود که نسبت به رویکرد سلول‌ساختاری در نقشه‌برداری کارکردی قشر عمیقاً شکاک بود. لشلی نوشت: «نقشهٔ سلول‌ساختاریِ ”آرمانی“ تقریباً بی‌ارزش است. تقسیم‌بندی نواحی تا حد زیادی از نظر تشریحی بی‌معناست و دربارهٔ تقسیم‌بندی‌های کارکردیِ محتمل قشر گمراه‌کننده است.» شکاکیت او با مطالعاتش دربارهٔ اثر ضایعه‌های گوناگون مغزی بر توانایی موش‌ها در یادگیری پیمودن یک ماز تقویت شد. لشلی از این مطالعات نتیجه گرفت که شدت نقص یادگیری به اندازهٔ ضایعه بستگی دارد، نه به جای دقیق آن. لشلی — و پس از او بسیاری روان‌شناسان دیگر — سرخورده از این نتایج، چنین نتیجه گرفتند که یادگیری و دیگر کارکردهای عالی ذهنی جایگاه ویژه‌ای در مغز ندارند و در نتیجه نمی‌توان آن‌ها را به مجموعه‌های مشخصی از نورون‌ها نسبت داد.</p>
 
@@ -1111,7 +1279,7 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
 
 </section>
 <section>
-  <h3>فرایندهای ذهنی حاصل برهم‌کنش واحدهای پردازشی بنیادی در مغزند</h3>
+<section class="qz"><div class="qz-h">خودآزمایی این بخش</div><div class="qz-i"><div class="qz-q">سه زبان‌پریشی را از هم جدا کنید.</div><div class="qz-a"><b>بروکا:</b> تولید مختل و تلگرافی، فهم نسبتاً سالم، بیمار آگاه و ناکام — پیشانی تحتانی چپ. <b>ورنیکه:</b> گفتار روان اما بی‌معنا، فهم مختل، اغلب ناآگاه به نقص — گیجگاهی خلفی چپ. <b>هدایتی:</b> فهم و تولید سالم، اما ناتوان در تکرارِ عینِ جمله — آسیب رشته‌های رابط.</div></div><div class="qz-i"><div class="qz-q">مدل ورنیکه چه پیش‌بینی‌ای کرد که بعداً درست از آب درآمد؟</div><div class="qz-a">اینکه اگر زبان شبکه‌ای از نواحی <em>و رشته‌های رابطشان</em> باشد، باید نوعی زبان‌پریشی وجود داشته باشد که در آن هر دو ناحیه سالم‌اند و فقط ارتباطشان قطع است: فهم خوب، گفتار روان، اما تکرار مختل. زبان‌پریشی هدایتی دقیقاً همین است — و <b>پس از</b> پیش‌بینی مدل شناسایی شد.</div></div></section>  <h3>فرایندهای ذهنی حاصل برهم‌کنش واحدهای پردازشی بنیادی در مغزند</h3>
 
   <p>چند دلیل وجود دارد که چرا شواهد مربوط به موضعی بودن کارکردهای مغزی — که اکنون در نگاه به گذشته چنین بدیهی و قانع‌کننده می‌نماید — در گذشته این‌همه بارها رد شده است. جمجمه‌شناسان ایدهٔ موضعی بودن را در شکلی اغراق‌آمیز و بدون شواهد کافی مطرح کردند. آنان هر ناحیه از قشر مخ را اندامی ذهنیِ مستقل تصور می‌کردند که به جنبه‌ای کامل و متمایز از شخصیت اختصاص دارد، درست همان‌گونه که لوزالمعده و کبد اندام‌های گوارشیِ مستقل‌اند. رد جمجمه‌شناسی از سوی فلورانس و مناقشه‌ای که در پی آن میان هواداران دیدگاه میدان–انبوهه (مخالف موضعی بودن) و پیوندگرایان سلولی (موافق موضعی بودن) در گرفت، واکنشی بود به نظریه‌ای ساده‌انگارانه و فاقد شواهد تجربیِ کافی.</p>
 
@@ -1159,7 +1327,7 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
 
   <p>برای تحلیل اینکه مغز چگونه فرایند ذهنیِ مشخصی را پدید می‌آورد، باید نه‌تنها تعیین کنیم کدام جنبه‌های آن فرایند به کدام نواحی مغز وابسته‌اند، بلکه دریابیم اطلاعات مربوط چگونه بازنمایی، مسیریابی و دگرگون می‌شوند. علوم اعصاب نوین در پی یکپارچه کردن این فهم در مقیاس‌های گوناگون است. برای نمونه، مطالعه در سطح تک‌سلول عصبی و اجزای مولکولی آن سازوکارهای زیربنایی تحریک‌پذیری الکتریکی و اتصالات سیناپسی را روشن می‌کند. مطالعهٔ سلول‌ها و مدارهای ساده به فهم محاسبات عصبی می‌انجامد؛ از عملیات پایه مانند کنترل تحریک خالص گرفته تا شاهکارهای محاسباتی‌تر مانند استخراج اطلاعات معنادار از داده‌های حسیِ خام. مطالعهٔ برهم‌کنش میان مدارها و نواحی مغزی می‌تواند توضیح دهد چگونه گروه‌های ماهیچه‌ایِ دور از هم را هماهنگ می‌کنیم یا باور خود به یک گزاره را بیان می‌کنیم. دانش در همهٔ این سطوح با صورت‌بندی‌های ریاضی، شبیه‌سازی رایانه‌ای و نظریهٔ روان‌شناختی به هم بافته می‌شود. اکنون می‌توان این ابزارهای مفهومی را با فنون نوین فیزیولوژیک و روش‌های تصویربرداری مغزی ترکیب کرد و بدین‌سان فرایندهای ذهنی را همچنان که در زمان واقعی در جانوران و انسان‌های زنده پیش می‌روند دنبال کرد. در واقع، شور و شوق آشکار در علوم اعصاب امروز از این باور سرچشمه می‌گیرد که اصول زیستیِ زیربنای اندیشه و رفتار انسان در دسترس ما هستند و شاید به‌زودی برای روشن کردن و بهبود وضع بشر به کار گرفته شوند.</p>
 
-  <h3>نکات کلیدی</h3>
+<section class="qz"><div class="qz-h">خودآزمایی این بخش</div><div class="qz-i"><div class="qz-q">چرا مسیر پشتی را ترجیحاً «چگونه» می‌نامند و نه «کجا»؟</div><div class="qz-a">چون کارش گزارشِ مختصات نیست، تبدیل اطلاعات بینایی به مختصاتِ لازم برای <b>عمل</b> است. شاهد بالینی: بیمار با آسیب پشتی شیء را درست نام می‌برد اما دستش را برای گرفتنش شکل نمی‌دهد؛ و در آگنوزی بینایی (آسیب شکمی) دقیقاً برعکس.</div></div><div class="qz-i"><div class="qz-q">در مغز دونیم‌شده، چرا نیمکرهٔ چپ برای کارِ نیمکرهٔ راست توجیه می‌سازد؟</div><div class="qz-a">چون زبان و گزارشِ کلامی دست اوست، اما به اطلاعاتی که فقط به نیمکرهٔ راست رسیده دسترسی ندارد. در عین حال رفتاری را می‌بیند که بدنِ خودش انجام داده. کارِ پیش‌فرضش ساختنِ روایتی علّی از شواهدِ در دسترس است — پس توضیحی می‌سازد و باورش می‌کند.</div></div><div class="qz-i"><div class="qz-q">«مدولار بودن با افزونگی» را در یک جمله تعریف کنید.</div><div class="qz-a">هر عملیات ذهنیِ ساده در مدار مشخص و قابل‌مکان‌یابی انجام می‌شود، اما کارکردهای پیچیده از هماهنگیِ چند مدارِ توزیع‌شده و تا حدی جایگزین‌پذیر برمی‌آیند.</div></div></section>  <h3>نکات کلیدی</h3>
 
   <div class="highlights">
     <ol>
@@ -1378,8 +1546,123 @@ html[dir="rtl"] #toc{ transform:translateX(-105%); }
     links.forEach(function(a,i){ a.classList.toggle('now',i===cur); });
     tick=false;
   }
+
+  /* ---------- figure lightbox ---------- */
+  var lb=document.createElement('div'); lb.id='lb';
+  lb.innerHTML='<button class="x" aria-label="بستن">&times;</button>'
+    +'<div class="wrapimg"><img alt=""></div><div class="cap"></div>';
+  document.body.appendChild(lb);
+  var lbImg=lb.querySelector('img'), lbCap=lb.querySelector('.cap');
+  function closeLb(){ lb.classList.remove('on'); lbImg.classList.remove('z');
+    document.body.style.overflow=''; }
+  lb.querySelector('.x').onclick=closeLb;
+  lb.onclick=function(e){ if(e.target===lb||e.target.className==='wrapimg') closeLb(); };
+  lbImg.onclick=function(){ lbImg.classList.toggle('z'); };
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&lb.classList.contains('on')) closeLb(); });
+
+  document.querySelectorAll('figure.fig').forEach(function(f){
+    var im=f.querySelector('img'); if(!im) return;
+    var h=document.createElement('span'); h.className='zhint';
+    h.textContent='برای بزرگ‌نمایی بزنید'; f.appendChild(h);
+    im.onclick=function(){
+      lbImg.src=im.src;
+      var src=f.querySelector('.src');
+      lbCap.textContent=src?src.textContent:'';
+      lb.classList.add('on'); document.body.style.overflow='hidden';
+    };
+  });
+
+  /* ---------- link the self-test to its answer key ---------- */
+  var qb=document.querySelector('.qbox');
+  if(qb){
+    var p=document.createElement('p');
+    p.style.cssText='margin:.9em 0 0;font-size:.9rem';
+    p.innerHTML='پاسخ‌ها در <a href="review.html" style="color:var(--accent);font-weight:700">'
+      +'بستهٔ مرور و خودآزمایی</a> آمده است — همراه با فلش‌کارت و نقشهٔ مفهومی همین فصل.';
+    qb.appendChild(p);
+  }
+
   addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(upd); } },{passive:true});
   upd();
+})();
+</script>
+
+<script>
+(function(){
+  var G={"neuroscience":["ˈnʊr.oʊˌsaɪ.əns","NEUR·o·sci·ence","علوم اعصاب",""],"neuron":["ˈnʊr.ɑːn","NEUR·on","نورون",""],"neuron doctrine":["ˈnʊr.ɑːn ˈdɑːk.trɪn","NEUR·on DOC·trine","آموزهٔ نورونی",""],"cerebral cortex":["səˈriː.brəl ˈkɔːr.teks","ce·RE·bral COR·tex","قشر مخ",""],"phrenology":["frəˈnɑː.lə.dʒi","phre·NOL·o·gy","فرنولوژی، جمجمه‌شناسی",""],"aphasia":["əˈfeɪ.ʒə","a·PHA·sia","زبان‌پریشی",""],"broca's area":["broʊˈkɑːz ˈer.i.ə","bro·CA'S AR·e·a","ناحیهٔ بروکا","brokahz area"],"wernicke's area":["ˈvɛr.nɪ.kəz ˈer.i.ə","WER·ni·cke's AR·e·a","ناحیهٔ ورنیکه","vairnikuz area"],"conduction aphasia":["kənˈdʌk.ʃən əˈfeɪ.ʒə","con·DUC·tion a·PHA·sia","زبان‌پریشی هدایتی",""],"arcuate fasciculus":["ˈɑːr.kju.ət fəˈsɪk.jə.ləs","AR·cu·ate fa·SCIC·u·lus","فاسیکولوس قوسی",""],"hemisphere":["ˈhem.ɪ.sfɪr","HEM·i·sphere","نیمکره",""],"lesion":["ˈliː.ʒən","LE·sion","ضایعه",""],"localization":["ˌloʊ.kə.ləˈzeɪ.ʃən","lo·cal·i·ZA·tion","مکان‌یابی کارکرد",""],"modularity":["ˌmɑː.dʒəˈler.ə.ti","mod·u·LAR·i·ty","مدولار بودن",""],"redundancy":["rɪˈdʌn.dən.si","re·DUN·dan·cy","افزونگی",""],"corpus callosum":["ˌkɔːr.pəs kəˈloʊ.səm","cor·pus cal·LO·sum","پیکر پینه‌ای",""],"split-brain":["ˈsplɪt breɪn","SPLIT·brain","مغز دونیم‌شده",""],"ventral stream":["ˈven.trəl striːm","VEN·tral stream","مسیر شکمی («چه»)",""],"dorsal stream":["ˈdɔːr.səl striːm","DOR·sal stream","مسیر پشتی («کجا/چگونه»)",""],"parietal lobe":["pəˈraɪ.ə.təl loʊb","pa·RI·e·tal lobe","لوب آهیانه‌ای",""],"occipital lobe":["ɑːkˈsɪp.ɪ.təl loʊb","oc·CIP·i·tal lobe","لوب پس‌سری",""],"temporal lobe":["ˈtem.pər.əl loʊb","TEM·po·ral lobe","لوب گیجگاهی",""],"frontal lobe":["ˈfrʌn.təl loʊb","FRON·tal lobe","لوب پیشانی",""],"gyrus":["ˈdʒaɪ.rəs","GY·rus","شکنج",""],"sulcus":["ˈsʌl.kəs","SUL·cus","شیار",""],"cajal":["kɑːˈhɑːl","Ca·JAL","کاخال","kah hall"],"golgi":["ˈɡoʊl.dʒi","GOL·gi","گلژی","gohl jee"],"brodmann area":["ˈbroʊd.mɑːn ˈer.i.ə","BROD·mann AR·e·a","ناحیهٔ برودمن",""],"agnosia":["æɡˈnoʊ.ʒə","ag·NO·sia","آگنوزی، ناتوانی بازشناسی",""],"dynamic polarization":["daɪˈnæm.ɪk ˌpoʊ.lə.rəˈzeɪ.ʃən","dy·NAM·ic po·lar·i·ZA·tion","قطبیت پویا",""],"connectional specificity":["kəˈnek.ʃən.əl ˌspes.ɪˈfɪs.ə.ti","con·NEC·tion·al spec·i·FIC·i·ty","اختصاصیت اتصالی",""],"consciousness":["ˈkɑːn.ʃəs.nəs","CON·scious·ness","آگاهی، هشیاری",""],"double dissociation":["ˈdʌb.əl dɪˌsoʊ.siˈeɪ.ʃən","DOU·ble dis·so·ci·A·tion","تفکیک دوگانه",""],"gene":["dʒiːn","gene","ژن",""],"genome":["ˈdʒiː.noʊm","GE·nome","ژنوم",""],"genotype":["ˈdʒiː.nə.taɪp","GE·no·type","ژنوتیپ",""],"phenotype":["ˈfiː.nə.taɪp","PHE·no·type","فنوتیپ",""],"allele":["əˈliːl","al·LELE","الل",""],"heritability":["ˌher.ɪ.təˈbɪl.ə.ti","her·i·ta·BIL·i·ty","وراثت‌پذیری",""],"exon":["ˈek.sɑːn","EX·on","اگزون",""],"intron":["ˈɪn.trɑːn","IN·tron","اینترون",""],"alternative splicing":["ɔːlˈtɜːr.nə.tɪv ˈsplaɪ.sɪŋ","al·TER·na·tive SPLIC·ing","پیرایش جایگزین",""],"transcription":["trænˈskrɪp.ʃən","tran·SCRIP·tion","رونویسی",""],"mutation":["mjuːˈteɪ.ʃən","mu·TA·tion","جهش",""],"knockout":["ˈnɑːk.aʊt","KNOCK·out","ناک‌اوت، حذف ژن",""],"transgenic":["trænzˈdʒen.ɪk","trans·GEN·ic","تراژن، تراریخته",""],"forward genetics":["ˈfɔːr.wərd dʒəˈnet.ɪks","FOR·ward ge·NET·ics","ژنتیک کلاسیک (پیش‌رو)",""],"reverse genetics":["rɪˈvɜːrs dʒəˈnet.ɪks","re·VERSE ge·NET·ics","ژنتیک معکوس",""],"circadian rhythm":["sɜːrˈkeɪ.di.ən ˈrɪð.əm","cir·CA·di·an RHY·thm","ریتم شبانه‌روزی",""],"period gene":["ˈpɪr.i.əd dʒiːn","PE·ri·od gene","ژن پریود (ساعت زیستی)",""],"feedback loop":["ˈfiːd.bæk luːp","FEED·back loop","حلقهٔ بازخورد",""],"polymorphism":["ˌpɑː.liˈmɔːr.fɪ.zəm","pol·y·MOR·phism","چندریختی",""],"pleiotropy":["plaɪˈɑː.trə.pi","plei·OT·ro·py","پلیوتروپی، یک‌ژن-چندصفت",""],"genetic heterogeneity":["dʒəˈnet.ɪk ˌhet.ər.oʊ.dʒəˈniː.ə.ti","ge·NET·ic het·er·o·ge·NE·i·ty","ناهمگونی ژنتیکی",""],"penetrance":["ˈpen.ɪ.trəns","PEN·e·trance","نفوذ (ژن)",""],"gene dosage":["dʒiːn ˈdoʊ.sɪdʒ","gene DOS·age","دُز ژن",""],"deletion":["dɪˈliː.ʃən","de·LE·tion","حذف (قطعهٔ کروموزومی)",""],"duplication":["ˌduː.pləˈkeɪ.ʃən","du·pli·CA·tion","تکرار (قطعهٔ کروموزومی)",""],"williams syndrome":["ˈwɪl.jəmz ˈsɪn.droʊm","WIL·liams SYN·drome","سندرم ویلیامز",""],"phenylketonuria":["ˌfen.əl.kiː.toʊˈnʊr.i.ə","phen·yl·ke·to·NU·ri·a","فنیل‌کتونوری (PKU)",""],"huntington's disease":["ˈhʌn.tɪŋ.tənz dɪˈziːz","HUN·ting·ton's dis·EASE","بیماری هانتینگتون",""],"schizophrenia":["ˌskɪt.səˈfriː.ni.ə","schiz·o·PHRE·ni·a","اسکیزوفرنی",""],"polygenic risk score":["ˌpɑː.liˈdʒen.ɪk rɪsk skɔːr","pol·y·GEN·ic risk score","نمرهٔ خطر چندژنی",""],"vasopressin":["ˌveɪ.zoʊˈpres.ɪn","va·so·PRES·sin","وازوپرسین",""],"vole":["voʊl","vole","ول (جوندهٔ صحرایی)",""],"drosophila":["drəˈsɑː.fə.lə","Dro·SOPH·i·la","مگس سرکه",""],"expression pattern":["ɪkˈspreʃ.ən ˈpæt.ərn","ex·PRES·sion PAT·tern","الگوی بیان",""],"dendrite":["ˈden.draɪt","DEN·drite","دندریت",""],"axon":["ˈæk.sɑːn","AX·on","آکسون",""],"soma":["ˈsoʊ.mə","SO·ma","جسم سلولی",""],"axon hillock":["ˈæk.sɑːn ˈhɪl.ək","AX·on HIL·lock","تپهٔ آکسون",""],"initial segment":["ɪˈnɪʃ.əl ˈseɡ.mənt","in·I·tial SEG·ment","قطعهٔ آغازی آکسون",""],"synapse":["ˈsɪn.æps","SYN·apse","سیناپس",""],"synaptic":["sɪˈnæp.tɪk","syn·AP·tic","سیناپسی",""],"membrane":["ˈmem.breɪn","MEM·brane","غشا",""],"resting potential":["ˈres.tɪŋ pəˈten.ʃəl","REST·ing po·TEN·tial","پتانسیل استراحت",""],"action potential":["ˈæk.ʃən pəˈten.ʃəl","AC·tion po·TEN·tial","پتانسیل عمل",""],"receptor potential":["rɪˈsep.tər pəˈten.ʃəl","re·CEP·tor po·TEN·tial","پتانسیل گیرنده",""],"graded potential":["ˈɡreɪ.dɪd pəˈten.ʃəl","GRAD·ed po·TEN·tial","پتانسیل درجه‌بندی‌شده",""],"all-or-none":["ˌɔːl.ɔːrˈnʌn","all·or·NONE","همه‌یا‌هیچ",""],"threshold":["ˈθreʃ.hoʊld","THRESH·old","آستانه",""],"depolarization":["diːˌpoʊ.lə.rəˈzeɪ.ʃən","de·po·lar·i·ZA·tion","دپلاریزاسیون",""],"hyperpolarization":["ˌhaɪ.pər.poʊ.lə.rəˈzeɪ.ʃən","hy·per·po·lar·i·ZA·tion","هایپرپلاریزاسیون",""],"refractory period":["rɪˈfræk.tər.i ˈpɪr.i.əd","re·FRAC·to·ry PE·ri·od","دورهٔ تجدیدناپذیری",""],"ion":["ˈaɪ.ɑːn","I·on","یون",""],"ion channel":["ˈaɪ.ɑːn ˈtʃæn.əl","I·on CHAN·nel","کانال یونی",""],"voltage-gated":["ˈvoʊl.tɪdʒ ˈɡeɪ.tɪd","VOLT·age GAT·ed","دریچه‌دار ولتاژی",""],"sodium":["ˈsoʊ.di.əm","SO·di·um","سدیم",""],"potassium":["pəˈtæs.i.əm","po·TAS·si·um","پتاسیم",""],"calcium":["ˈkæl.si.əm","CAL·ci·um","کلسیم",""],"conductance":["kənˈdʌk.təns","con·DUC·tance","رسانایی",""],"permeability":["ˌpɜːr.mi.əˈbɪl.ə.ti","per·me·a·BIL·i·ty","نفوذپذیری",""],"concentration gradient":["ˌkɑːn.sənˈtreɪ.ʃən ˈɡreɪ.di.ənt","con·cen·TRA·tion GRA·di·ent","شیب غلظتی",""],"equilibrium":["ˌiː.kwɪˈlɪb.ri.əm","e·qui·LIB·ri·um","تعادل",""],"myelin":["ˈmaɪ.ə.lɪn","MY·e·lin","میلین",""],"node of ranvier":["noʊd əv ˈrɑːn.vi.eɪ","node of RAN·vi·er","گره رانویه","node of rahn vee ay"],"saltatory conduction":["ˈsæl.tə.tɔːr.i kənˈdʌk.ʃən","SAL·ta·to·ry con·DUC·tion","هدایت جهشی",""],"neurotransmitter":["ˌnʊr.oʊˈtrænz.mɪt.ər","neu·ro·TRANS·mit·ter","ناقل عصبی",""],"vesicle":["ˈves.ɪ.kəl","VES·i·cle","وزیکول",""],"excitatory":["ɪkˈsaɪ.tə.tɔːr.i","ex·CIT·a·to·ry","تحریکی",""],"inhibitory":["ɪnˈhɪb.ɪ.tɔːr.i","in·HIB·i·to·ry","مهاری",""],"inhibition":["ˌɪn.hɪˈbɪʃ.ən","in·hi·BI·tion","مهار",""],"interneuron":["ˌɪn.tərˈnʊr.ɑːn","in·ter·NEU·ron","بین‌نورون",""],"motor neuron":["ˈmoʊ.tər ˈnʊr.ɑːn","MO·tor NEU·ron","نورون حرکتی",""],"sensory neuron":["ˈsen.sər.i ˈnʊr.ɑːn","SEN·so·ry NEU·ron","نورون حسی",""],"stretch reflex":["stretʃ ˈriː.fleks","stretch RE·flex","بازتاب کششی",""],"convergence":["kənˈvɜːr.dʒəns","con·VER·gence","هم‌گرایی",""],"divergence":["daɪˈvɜːr.dʒəns","di·VER·gence","واگرایی",""],"summation":["səˈmeɪ.ʃən","sum·MA·tion","جمع (فضایی/زمانی)",""],"feedforward inhibition":["ˌfiːdˈfɔːr.wərd ˌɪn.hɪˈbɪʃ.ən","feed·FOR·ward in·hi·BI·tion","مهار پیش‌خور",""],"feedback inhibition":["ˈfiːd.bæk ˌɪn.hɪˈbɪʃ.ən","FEED·back in·hi·BI·tion","مهار پس‌خور",""],"renshaw cell":["ˈren.ʃɔː sel","REN·shaw cell","سلول رنشاو",""],"labeled line":["ˈleɪ.bəld laɪn","LA·beled line","خط برچسب‌دار",""],"plasticity":["plæˈstɪs.ə.ti","plas·TIC·i·ty","شکل‌پذیری",""],"glia":["ˈɡliː.ə","GLI·a","گلیا",""],"astrocyte":["ˈæs.trə.saɪt","AS·tro·cyte","آستروسیت",""],"oligodendrocyte":["ˌɑː.lɪ.ɡoʊˈden.drə.saɪt","ol·i·go·DEN·dro·cyte","الیگودندروسیت",""],"demyelination":["diːˌmaɪ.ə.lɪˈneɪ.ʃən","de·my·e·li·NA·tion","میلین‌زدایی",""],"spinal cord":["ˈspaɪ.nəl kɔːrd","SPI·nal cord","نخاع",""],"brainstem":["ˈbreɪn.stem","BRAIN·stem","ساقهٔ مغز",""],"medulla":["məˈdʌl.ə","me·DUL·la","بصل‌النخاع",""],"pons":["pɑːnz","pons","پل مغزی",""],"midbrain":["ˈmɪd.breɪn","MID·brain","مغز میانی",""],"cerebellum":["ˌser.əˈbel.əm","cer·e·BEL·lum","مخچه",""],"thalamus":["ˈθæl.ə.məs","THAL·a·mus","تالاموس",""],"hypothalamus":["ˌhaɪ.poʊˈθæl.ə.məs","hy·po·THAL·a·mus","هیپوتالاموس",""],"basal ganglia":["ˈbeɪ.səl ˈɡæŋ.ɡli.ə","BA·sal GAN·gli·a","عقده‌های قاعده‌ای",""],"hippocampus":["ˌhɪp.əˈkæm.pəs","hip·po·CAM·pus","هیپوکامپ",""],"amygdala":["əˈmɪɡ.də.lə","a·MYG·da·la","آمیگدال",""],"gray matter":["ɡreɪ ˈmæt.ər","gray MAT·ter","مادّهٔ خاکستری",""],"white matter":["waɪt ˈmæt.ər","white MAT·ter","مادّهٔ سفید",""],"dorsal root ganglion":["ˈdɔːr.səl ruːt ˈɡæŋ.ɡli.ən","DOR·sal root GAN·gli·on","گانگلیون ریشهٔ پشتی",""],"dorsal column":["ˈdɔːr.səl ˈkɑː.ləm","DOR·sal COL·umn","ستون پشتی",""],"medial lemniscus":["ˈmiː.di.əl lemˈnɪs.kəs","ME·di·al lem·NIS·cus","لمنیسکوس داخلی",""],"decussation":["ˌdiː.kəˈseɪ.ʃən","de·cus·SA·tion","تقاطع (مسیر)",""],"spinothalamic tract":["ˌspaɪ.noʊ.θəˈlæm.ɪk trækt","spi·no·tha·LAM·ic tract","مسیر اسپینوتالامیک",""],"corticospinal tract":["ˌkɔːr.tɪ.koʊˈspaɪ.nəl trækt","cor·ti·co·SPI·nal tract","مسیر قشری–نخاعی",""],"pyramid":["ˈpɪr.ə.mɪd","PYR·a·mid","هرم (بصل‌النخاع)",""],"ipsilateral":["ˌɪp.sɪˈlæt.ər.əl","ip·si·LAT·er·al","هم‌سمت",""],"contralateral":["ˌkɑːn.trəˈlæt.ər.əl","con·tra·LAT·er·al","دگرسمت، سمت مقابل",""],"brown-séquard syndrome":["ˌbraʊn seɪˈkɑːr ˈsɪn.droʊm","brown se·QUARD SYN·drome","سندرم براون–سکار","brown say car syndrome"],"enlargement":["ɪnˈlɑːrdʒ.mənt","en·LARGE·ment","برجستگی (نخاع)",""],"proprioception":["ˌproʊ.pri.oʊˈsep.ʃən","pro·pri·o·CEP·tion","حس وضعیت، پروپریوسپشن",""],"nociception":["ˌnoʊ.sɪˈsep.ʃən","no·ci·CEP·tion","حس درد",""],"somatosensory cortex":["soʊˌmæt.oʊˈsen.sər.i ˈkɔːr.teks","so·ma·to·SEN·so·ry COR·tex","قشر حسی–پیکری",""],"homunculus":["həˈmʌŋ.kjə.ləs","ho·MUN·cu·lus","هومونکولوس",""],"topographic map":["ˌtɑː.pəˈɡræf.ɪk mæp","top·o·GRAPH·ic map","نقشهٔ توپوگرافیک",""],"cortical column":["ˈkɔːr.tɪ.kəl ˈkɑː.ləm","COR·ti·cal COL·umn","ستون قشری",""],"granular cortex":["ˈɡræn.jə.lər ˈkɔːr.teks","GRAN·u·lar COR·tex","قشر گرانولار (حسی)",""],"agranular cortex":["eɪˈɡræn.jə.lər ˈkɔːr.teks","a·GRAN·u·lar COR·tex","قشر آگرانولار (حرکتی)",""],"pyramidal cell":["pɪˈræm.ɪ.dəl sel","py·RAM·i·dal cell","سلول هرمی",""],"betz cell":["bets sel","BETZ cell","سلول بتز",""],"lamina":["ˈlæm.ɪ.nə","LAM·i·na","لایه",""],"thalamic reticular nucleus":["θəˈlæm.ɪk rəˈtɪk.jə.lər ˈnuː.kli.əs","tha·LAM·ic re·TIC·u·lar NU·cle·us","هستهٔ رتیکولار تالاموس",""],"pulvinar":["pʌlˈvaɪ.nər","pul·VI·nar","پالوینار",""],"olfactory bulb":["ɑːlˈfæk.tər.i bʌlb","ol·FAC·to·ry bulb","پیاز بویایی",""],"final common pathway":["ˈfaɪ.nəl ˈkɑː.mən ˈpæθ.weɪ","FI·nal COM·mon PATH·way","مسیر مشترک نهایی",""],"modulatory system":["ˈmɑː.dʒə.lə.tɔːr.i ˈsɪs.təm","MOD·u·la·to·ry SYS·tem","سامانهٔ تعدیل‌گر",""],"dopamine":["ˈdoʊ.pə.miːn","DO·pa·mine","دوپامین",""],"norepinephrine":["ˌnɔːr.epˈɪn.ə.frɪn","nor·ep·i·NEPH·rine","نوراپی‌نفرین",""],"serotonin":["ˌser.əˈtoʊ.nɪn","ser·o·TO·nin","سروتونین",""],"acetylcholine":["əˌsiː.təlˈkoʊ.liːn","a·ce·tyl·CHO·line","استیل‌کولین",""],"locus coeruleus":["ˌloʊ.kəs sɪˈruː.li.əs","LO·cus coe·RU·le·us","لوکوس سرولئوس",""],"substantia nigra":["səbˈstæn.ʃə ˈnaɪ.ɡrə","sub·STAN·tia NI·gra","جسم سیاه",""],"raphe nuclei":["ˈreɪ.feɪ ˈnuː.kli.aɪ","RA·phe NU·cle·i","هسته‌های رافه",""],"entorhinal cortex":["ˌen.tɔːˈraɪ.nəl ˈkɔːr.teks","en·to·RHI·nal COR·tex","قشر انتورینال",""],"dentate gyrus":["ˈden.teɪt ˈdʒaɪ.rəs","DEN·tate GY·rus","شیار دندانه‌ای",""],"subiculum":["səˈbɪk.jə.ləm","sub·IC·u·lum","ساب‌ایکولوم",""],"encoding":["ɪnˈkoʊ.dɪŋ","en·COD·ing","رمزگذاری",""],"decoding":["diːˈkoʊ.dɪŋ","de·COD·ing","رمزگشایی",""],"population coding":["ˌpɑː.pjəˈleɪ.ʃən ˈkoʊ.dɪŋ","pop·u·LA·tion COD·ing","رمزگذاری جمعیتی",""],"place cell":["pleɪs sel","PLACE cell","سلول مکانی",""],"replay":["ˈriː.pleɪ","RE·play","بازپخش",""],"credit assignment":["ˈkred.ɪt əˈsaɪn.mənt","CRED·it as·SIGN·ment","انتساب اعتبار",""],"neural circuit":["ˈnʊr.əl ˈsɜːr.kɪt","NEU·ral CIR·cuit","مدار عصبی",""],"circuit motif":["ˈsɜːr.kɪt moʊˈtiːf","CIR·cuit mo·TIF","نقش‌مایهٔ مداری",""],"feedforward":["ˌfiːdˈfɔːr.wərd","feed·FOR·ward","پیش‌خور",""],"lateral inhibition":["ˈlæt.ər.əl ˌɪn.hɪˈbɪʃ.ən","LAT·er·al in·hi·BI·tion","مهار جانبی",""],"recurrent network":["rɪˈkɜːr.ənt ˈnet.wɜːrk","re·CUR·rent NET·work","شبکهٔ بازگشتی",""],"working memory":["ˈwɜːr.kɪŋ ˈmem.ər.i","WORK·ing MEM·o·ry","حافظهٔ کاری",""],"excitation/inhibition balance":["ˌek.sɪˈteɪ.ʃən ˌɪn.hɪˈbɪʃ.ən ˈbæl.əns","ex·ci·TA·tion in·hi·BI·tion BAL·ance","توازن تحریک/مهار",""],"hierarchy":["ˈhaɪ.ə.rɑːr.ki","HI·er·ar·chy","سلسله‌مراتب",""],"receptive field":["rɪˈsep.tɪv fiːld","re·CEP·tive field","میدان گیرندگی",""],"invariance":["ɪnˈver.i.əns","in·VAR·i·ance","ناوردایی",""],"object recognition":["ˈɑːb.dʒekt ˌrek.əɡˈnɪʃ.ən","OB·ject rec·og·NI·tion","بازشناسی شیء",""],"deep learning":["diːp ˈlɜːr.nɪŋ","deep LEARN·ing","یادگیری عمیق",""],"backpropagation":["ˌbæk.prɑː.pəˈɡeɪ.ʃən","back·prop·a·GA·tion","پس‌انتشار",""],"granule cell":["ˈɡræn.juːl sel","GRAN·ule cell","سلول دانه‌ای",""],"mossy fiber":["ˈmɑː.si ˈfaɪ.bər","MOSS·y FI·ber","رشتهٔ خزه‌ای",""],"parallel fiber":["ˈper.ə.lel ˈfaɪ.bər","PAR·al·lel FI·ber","رشتهٔ موازی",""],"climbing fiber":["ˈklaɪ.mɪŋ ˈfaɪ.bər","CLIMB·ing FI·ber","رشتهٔ بالارونده",""],"purkinje cell":["pərˈkɪn.dʒi sel","pur·KIN·je cell","سلول پورکنژ","per kin jee cell"],"golgi cell":["ˈɡoʊl.dʒi sel","GOL·gi cell","سلول گلژی","gohl jee cell"],"deep cerebellar nuclei":["diːp ˌser.əˈbel.ər ˈnuː.kli.aɪ","deep cer·e·BEL·lar NU·cle·i","هسته‌های عمقی مخچه",""],"inferior olive":["ɪnˈfɪr.i.ər ˈɑː.lɪv","in·FE·ri·or OL·ive","زیتون تحتانی",""],"sparse coding":["spɑːrs ˈkoʊ.dɪŋ","SPARSE cod·ing","رمزگذاری پراکنده",""],"linearly separable":["ˈlɪn.i.ər.li ˈsep.ər.ə.bəl","LIN·e·ar·ly SEP·a·ra·ble","خطّی تفکیک‌پذیر",""],"neural integrator":["ˈnʊr.əl ˈɪn.tɪˌɡreɪ.tər","NEU·ral IN·te·gra·tor","انتگرال‌گیر عصبی",""],"oculomotor":["ˌɑː.kjə.loʊˈmoʊ.tər","oc·u·lo·MO·tor","حرکتی-چشمی",""],"saccade":["səˈkɑːd","sac·CADE","ساکاد، پرش چشم",""],"gaze holding":["ɡeɪz ˈhoʊl.dɪŋ","GAZE hold·ing","تثبیت نگاه",""],"nystagmus":["nɪˈstæɡ.məs","ny·STAG·mus","نیستاگموس",""],"gain":["ɡeɪn","gain","بهره",""],"hebb's rule":["hebz ruːl","HEBB'S rule","قانون هب",""],"hebbian plasticity":["ˈheb.i.ən plæˈstɪs.ə.ti","HEB·bi·an plas·TIC·i·ty","شکل‌پذیری هبی",""],"long-term potentiation":["ˌlɔːŋ tɜːrm pəˌten.ʃiˈeɪ.ʃən","long term po·ten·ti·A·tion","تقویت بلندمدت (LTP)",""],"long-term depression":["ˌlɔːŋ tɜːrm dɪˈpreʃ.ən","long term de·PRES·sion","تضعیف بلندمدت (LTD)",""],"homeostatic plasticity":["ˌhoʊ.mi.oʊˈstæt.ɪk plæˈstɪs.ə.ti","ho·me·o·STAT·ic plas·TIC·i·ty","شکل‌پذیری هم‌ایستا",""],"synaptic scaling":["sɪˈnæp.tɪk ˈskeɪ.lɪŋ","syn·AP·tic SCAL·ing","مقیاس‌بندی سیناپسی",""],"spike-timing-dependent plasticity":["spaɪk ˈtaɪ.mɪŋ dɪˈpen.dənt plæˈstɪs.ə.ti","spike TIM·ing de·PEN·dent plas·TIC·i·ty","شکل‌پذیری وابسته به زمان‌بندی سنبله",""],"habituation":["həˌbɪtʃ.uˈeɪ.ʃən","ha·bit·u·A·tion","خوگیری",""],"sensitization":["ˌsen.sɪ.təˈzeɪ.ʃən","sen·si·ti·ZA·tion","حساس‌سازی",""],"classical conditioning":["ˈklæs.ɪ.kəl kənˈdɪʃ.ə.nɪŋ","CLAS·si·cal con·DI·tion·ing","شرطی‌سازی کلاسیک",""],"operant conditioning":["ˈɑː.pər.ənt kənˈdɪʃ.ə.nɪŋ","OP·er·ant con·DI·tion·ing","شرطی‌سازی عامل",""],"unsupervised learning":["ˌʌnˈsuː.pər.vaɪzd ˈlɜːr.nɪŋ","un·SU·per·vised LEARN·ing","یادگیری بدون معلم",""],"eyeblink conditioning":["ˈaɪ.blɪŋk kənˈdɪʃ.ə.nɪŋ","EYE·blink con·DI·tion·ing","شرطی‌سازی پلک",""],"conditioned stimulus":["kənˈdɪʃ.ənd ˈstɪm.jə.ləs","con·DI·tioned STIM·u·lus","محرک شرطی",""],"unconditioned response":["ˌʌn.kənˈdɪʃ.ənd rɪˈspɑːns","un·con·DI·tioned re·SPONSE","پاسخ غیرشرطی",""],"optogenetics":["ˌɑːp.toʊ.dʒəˈnet.ɪks","op·to·ge·NET·ics","اپتوژنتیک",""],"opsin":["ˈɑːp.sɪn","OP·sin","اُپسین",""],"electrophysiology":["ɪˌlek.troʊˌfɪz.iˈɑː.lə.dʒi","e·lec·tro·phys·i·OL·o·gy","الکتروفیزیولوژی",""]};
+
+  /* five-minute summary toggle */
+  var s5=document.querySelector('.sum5');
+  if(s5){ s5.querySelector('.s5-tog').onclick=function(){
+    var sh=s5.classList.toggle('shut');
+    this.textContent=sh?'نشان بده':'پنهان کن'; }; }
+
+  /* in-text self-checks */
+  document.querySelectorAll('.qz-i').forEach(function(it){
+    var q=it.querySelector('.qz-q');
+    q.setAttribute('role','button'); q.setAttribute('tabindex','0');
+    function t(){ it.classList.toggle('open'); }
+    q.onclick=t;
+    q.onkeydown=function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); t(); } };
+  });
+
+  /* glossary popover on English terms */
+  var pop=document.createElement('div'); pop.id='pop';
+  document.body.appendChild(pop);
+  function hide(){ pop.classList.remove('on'); }
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.gl')&&!e.target.closest('#pop')) hide(); });
+  addEventListener('scroll',hide,{passive:true});
+
+  function syl(str){
+    if(!str) return '';
+    return str.split('\u00b7').map(function(p){
+      var core=p.replace(/[^A-Za-z']/g,'');
+      return (core.length>1&&core===core.toUpperCase())?'<b>'+p+'</b>':p;
+    }).join('<span style="opacity:.35">\u00b7</span>');
+  }
+  function say(t){
+    if(!('speechSynthesis' in window)) return;
+    try{ speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=.85;
+      var v=speechSynthesis.getVoices().filter(function(x){return /^en[-_]US/i.test(x.lang);})[0];
+      if(v) u.voice=v; speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
+  document.querySelectorAll('.en').forEach(function(sp){
+    var raw=sp.textContent.trim().replace(/^[(\[]|[)\]]$/g,'').trim();
+    var g=G[raw.toLowerCase()];
+    if(!g) return;
+    sp.classList.add('gl');
+    sp.onclick=function(e){
+      e.stopPropagation();
+      pop.innerHTML='<div class="w">'+raw+'</div>'
+        +'<div class="syl">'+syl(g[1])+'</div>'
+        +'<div class="ipa">/'+g[0]+'/</div>'
+        +'<div class="fa">'+g[2]+'</div>'
+        +'<button class="pl" type="button">\ud83d\udd0a تلفظ</button>';
+      pop.querySelector('.pl').onclick=function(ev){ ev.stopPropagation(); say(g[3]||raw); };
+      pop.classList.add('on');
+      var r=sp.getBoundingClientRect();
+      var top=r.bottom+window.scrollY+8;
+      pop.style.top=top+'px'; pop.style.left='0px';
+      var w=pop.offsetWidth;
+      var left=r.left+window.scrollX+r.width/2-w/2;
+      left=Math.max(10,Math.min(left,document.documentElement.clientWidth-w-10));
+      pop.style.left=left+'px';
+    };
+  });
+
+  var n=document.querySelectorAll('.gl').length;
+  if(n){
+    var note=document.createElement('p');
+    note.style.cssText='text-indent:0;font-size:.86rem;color:var(--muted);margin:.6em 0 0';
+    note.innerHTML='\u200f<b>نکته:</b> روی اصطلاح‌های انگلیسیِ نقطه‌چین‌دار در متن بزنید تا '
+      +'تلفظ، استرس و معنی‌شان همان‌جا باز شود.';
+    var b=document.querySelector('.s5-body'); if(b) b.appendChild(note);
+  }
 })();
 </script>
 </body>
