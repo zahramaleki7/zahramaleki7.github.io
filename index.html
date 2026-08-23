@@ -85,6 +85,14 @@ h1{margin:0 0 .35rem; font-size:clamp(1.6rem,4.2vw,2.15rem); font-weight:700; li
 .seg{display:flex; border:1px solid var(--rule); border-radius:8px; overflow:hidden; background:var(--surf)}
 .seg button{padding:.32rem .7rem; font-size:.82rem; color:var(--mut)}
 .seg button[aria-pressed="true"]{background:var(--acc-w); color:var(--acc); font-weight:700}
+.vpick{display:flex; align-items:center; gap:6px}
+.vpick label{font-size:.8rem; color:var(--mut); white-space:nowrap}
+select.vsel{
+  padding:.3rem .6rem; border-radius:8px; border:1px solid var(--rule);
+  background:var(--surf); color:var(--ink); font-family:inherit; font-size:.82rem; max-width:230px;
+}
+.flag:empty{display:none}
+.flag{font-size:.78rem; color:var(--acc); font-weight:700; border:1px solid var(--acc); border-radius:99px; padding:.05rem .5rem; white-space:nowrap}
 
 /* ---------- term row ---------- */
 .grp{margin:26px 0 10px; display:flex; align-items:center; gap:10px}
@@ -198,6 +206,7 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
     <button class="chip k3" data-ch="3" aria-pressed="false">فصل ۳</button>
     <button class="chip k4" data-ch="4" aria-pressed="false">فصل ۴</button>
     <button class="chip k5" data-ch="5" aria-pressed="false">فصل ۵</button>
+    <span class="vpick"><label for="vsel">صدا:</label><select class="vsel" id="vsel"></select><span class="flag" id="vflag"></span></span>
     <span style="flex:1"></span>
     <div class="seg hide" id="dir" title="جهت تمرین">
       <button data-dir="fa" aria-pressed="true">فارسی ← انگلیسی</button>
@@ -207,7 +216,7 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
 </div></div>
 
 <div id="nosp" class="note warnbox hide">
-  <b>مرورگر شما موتور گفتار ندارد.</b> دکمه‌های پخش کار نمی‌کنند. آوانگاری IPA و هجابندی همچنان درست‌اند؛ برای شنیدن صدای واقعی، واژه را در <span class="lat">YouGlish</span> یا <span class="lat">Forvo</span> جست‌وجو کنید.
+  <b>صدای انگلیسی روی این دستگاه پیدا نشد.</b> دکمه‌های پخش کار نمی‌کنند. آوانگاری IPA و هجابندی همچنان درست‌اند؛ برای شنیدن صدای واقعی، واژه را در <span class="lat">YouGlish</span> یا <span class="lat">Forvo</span> جست‌وجو کنید.
 </div>
 
 <section id="view-g">
@@ -216,6 +225,7 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
     <ul>
       <li>اول دکمهٔ پخش را بزنید، بعد <b>با صدای بلند تکرار کنید</b> — تلفظ یک مهارت حرکتی است و با نگاه‌کردن ساخته نمی‌شود.</li>
       <li>دکمهٔ «آهسته» زیر هر واژه، همان واژه را با نصفِ سرعت می‌گوید؛ برای واژه‌های بلند مثل <span class="lat">phenylketonuria</span> اول آهسته، بعد عادی.</li>
+      <li>همهٔ آوانگاری‌های این صفحه <b>آمریکایی</b> است. با منوی «صدا» در نوار بالا می‌توانید لهجهٔ صدا را عوض کنید — برای هماهنگی با آوانگاری، صدایی را انتخاب کنید که کنارش «آمریکایی» نوشته شده. انتخابتان ذخیره می‌شود.</li>
       <li>در حالت <b>تمرین</b>، کلید <b>فاصله</b> کارت را برمی‌گرداند و کلید <b>S</b> صدا را پخش می‌کند.</li>
       <li>صدای موتور مرورگر برای اسم‌های خاص (<span class="lat">Purkinje</span>، <span class="lat">Cajal</span>) گاهی غلط است — برای این‌ها من تلفظ اصلاح‌شده را به موتور می‌دهم، ولی معیار نهایی همان IPA و جعبهٔ زرد است.</li>
     </ul>
@@ -239,8 +249,8 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
 </section>
 
 <footer>
-  آوانگاری بر پایهٔ تلفظ آمریکایی (<span class="lat">General American</span>) است؛ در تلفظ بریتانیایی چند مورد فرق می‌کند و هر دو درست‌اند.
-  صدا از موتور گفتارِ خودِ مرورگر می‌آید و نیازی به اینترنت ندارد. این فایل کاملاً مستقل است — بدون اینترنت و بدون هیچ برنامهٔ دیگری، فقط با دوبار کلیک در مرورگر باز می‌شود.
+  آوانگاری بر پایهٔ تلفظ آمریکایی (<span class="lat">General American</span>) است؛ در تلفظ بریتانیایی چند مورد فرق می‌کند — مهم‌ترینش این‌که «r» پس از مصوت (در <span class="lat">cortex, dorsal, receptor</span>) در آمریکایی تلفظ می‌شود و در بریتانیایی نه. هر دو درست‌اند؛ فقط قاطی‌شان نکنید. این فایل مستقل است — بدون اینترنت و بدون هیچ برنامهٔ دیگری باز می‌شود.
+  صدا از موتور گفتارِ خودِ مرورگر می‌آید و نیازی به اینترنت ندارد.
 </footer>
 </div>
 
@@ -481,14 +491,38 @@ const CH=['','۱','۲','۳','۴','۵'];
 
 /* ---------------- speech ---------------- */
 let voice=null, ready=('speechSynthesis' in window);
-function pickVoice(){
+const ACC={'en-US':'آمریکایی','en-GB':'بریتانیایی','en-AU':'استرالیایی','en-CA':'کانادایی',
+           'en-IE':'ایرلندی','en-IN':'هندی','en-NZ':'نیوزیلندی','en-ZA':'آفریقای‌جنوبی'};
+function accName(l){ const k=(l||'').replace('_','-'); return ACC[k]|| (ACC[k.slice(0,5)]||'انگلیسی'); }
+function store(k,v){ try{ v===undefined?0:localStorage.setItem(k,v); return localStorage.getItem(k); }catch(e){ return null; } }
+let voiceTries=0;
+function buildVoices(){
   if(!ready) return;
+  voiceTries++;
+  const sel=document.getElementById('vsel');
   const vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));
-  if(!vs.length) return;
-  voice = vs.find(v=>/^en[-_]US/i.test(v.lang)&&/natural|google|samantha|zira/i.test(v.name))
-       || vs.find(v=>/^en[-_]US/i.test(v.lang)) || vs[0];
+  if(!vs.length){
+    sel.innerHTML='<option>'+(voiceTries>1?'صدای انگلیسی یافت نشد':'در حال بارگذاری…')+'</option>';
+    if(voiceTries>1) document.getElementById('nosp').classList.remove('hide');
+    return;
+  }
+  vs.sort((a,b)=>{
+    const r=v=>/^en[-_]US/i.test(v.lang)?0:/^en[-_]GB/i.test(v.lang)?1:2;
+    return r(a)-r(b) || a.name.localeCompare(b.name);
+  });
+  const saved=store('pron.voice');
+  sel.innerHTML=vs.map((v,i)=>`<option value="${i}">${accName(v.lang)} — ${v.name}</option>`).join('');
+  let idx=vs.findIndex(v=>v.name===saved);
+  if(idx<0) idx=vs.findIndex(v=>/^en[-_]US/i.test(v.lang)&&/natural|online|aria|zira|david|samantha|google/i.test(v.name));
+  if(idx<0) idx=vs.findIndex(v=>/^en[-_]US/i.test(v.lang));
+  if(idx<0) idx=0;
+  sel.value=String(idx); voice=vs[idx];
+  document.getElementById('vflag').textContent=accName(voice.lang);
+  sel.onchange=()=>{ voice=vs[+sel.value]; store('pron.voice',voice.name);
+    document.getElementById('vflag').textContent=accName(voice.lang);
+    say(voice.lang.toLowerCase().startsWith('en-us')?'synapse, cerebral cortex':'synapse, cerebral cortex',false,null); };
 }
-if(ready){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+if(ready){ buildVoices(); speechSynthesis.onvoiceschanged=buildVoices; setTimeout(buildVoices,900); }
 else { document.getElementById('nosp').classList.remove('hide'); }
 
 let liveBtn=null;
