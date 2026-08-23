@@ -11,6 +11,7 @@
   --ink:#16202A; --ink2:#3B4A57; --mut:#5C6C7A; --rule:#E1E8ED;
   --acc:#0B6E78; --acc-w:#E4F1F2; --acc-ink:#FFFFFF;
   --warn:#8A5A0B; --warn-w:#FBF2E1; --warn-rule:#EBD9B4;
+  --ok:#1E7A54; --ok-w:#E4F2EB; --red:#A8323F;
   --c1:#0F6B74; --c2:#6B3F8C; --c3:#1F5FA8; --c4:#9A6410; --c5:#2E7D5B;
   --c1w:#E5F1F2; --c2w:#F0E9F5; --c3w:#E7EFF8; --c4w:#F8F0E1; --c5w:#E8F4EE;
   --shadow:0 1px 2px rgba(20,35,45,.05), 0 6px 20px -12px rgba(20,35,45,.22);
@@ -21,6 +22,7 @@
     --ink:#E4ECF1; --ink2:#C2CFD8; --mut:#8A9AA7; --rule:#25313A;
     --acc:#45C2CE; --acc-w:#132A2E; --acc-ink:#06181B;
     --warn:#E0B063; --warn-w:#2A2317; --warn-rule:#3D3320;
+    --ok:#4CBE8B; --ok-w:#12291F; --red:#E4808C;
     --c1:#4CB6BF; --c2:#B189D0; --c3:#68A6E8; --c4:#D8A147; --c5:#5FC095;
     --c1w:#122A2D; --c2w:#241B2E; --c3w:#14212F; --c4w:#2A2216; --c5w:#132720;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.8);
@@ -31,6 +33,7 @@
   --ink:#E4ECF1; --ink2:#C2CFD8; --mut:#8A9AA7; --rule:#25313A;
   --acc:#45C2CE; --acc-w:#132A2E; --acc-ink:#06181B;
   --warn:#E0B063; --warn-w:#2A2317; --warn-rule:#3D3320;
+  --ok:#4CBE8B; --ok-w:#12291F; --red:#E4808C;
   --c1:#4CB6BF; --c2:#B189D0; --c3:#68A6E8; --c4:#D8A147; --c5:#5FC095;
   --c1w:#122A2D; --c2w:#241B2E; --c3w:#14212F; --c4w:#2A2216; --c5w:#132720;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.8);
@@ -100,7 +103,7 @@ select.vsel{
 .grp .bead{width:10px; height:10px; border-radius:3px; flex:0 0 auto}
 .grp .line{flex:1; height:1px; background:var(--rule)}
 .term{
-  display:grid; grid-template-columns:44px 1fr; gap:14px; align-items:start;
+  display:grid; grid-template-columns:44px 1fr 32px; gap:14px; align-items:start;
   background:var(--surf); border:1px solid var(--rule); border-radius:12px;
   padding:12px 14px; margin-bottom:8px; box-shadow:var(--shadow);
 }
@@ -135,6 +138,56 @@ select.vsel{
 .slow{font-size:.74rem; color:var(--mut); border:1px solid var(--rule); border-radius:6px; padding:.1rem .45rem}
 .slow:hover{color:var(--acc); border-color:var(--acc)}
 
+/* ---------- progress ---------- */
+.mark{
+  width:32px; height:32px; border-radius:50%; border:1.5px solid var(--rule);
+  display:flex; align-items:center; justify-content:center; color:var(--rule);
+  transition:all .12s ease; flex:0 0 auto; margin-top:4px;
+}
+.mark svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.mark:hover{border-color:var(--ok); color:var(--ok)}
+.mark[aria-pressed="true"]{background:var(--ok); border-color:var(--ok); color:#fff}
+.term.done{opacity:.62}
+.term.done:hover{opacity:1}
+.term.weak{box-shadow:var(--shadow), inset 3px 0 0 var(--warn)}
+.pill{
+  font-size:.78rem; font-weight:700; color:var(--ok); background:var(--ok-w);
+  border-radius:99px; padding:.12rem .6rem; white-space:nowrap;
+}
+.stateseg{display:flex; border:1px solid var(--rule); border-radius:8px; overflow:hidden; background:var(--surf)}
+.stateseg button{padding:.3rem .7rem; font-size:.82rem; color:var(--mut)}
+.stateseg button[aria-pressed="true"]{background:var(--acc-w); color:var(--acc); font-weight:700}
+
+.phead{display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+  background:var(--surf); border:1px solid var(--rule); border-radius:16px;
+  padding:22px 24px; box-shadow:var(--shadow); margin-bottom:20px}
+.ring{width:118px; height:118px; flex:0 0 auto; transform:rotate(-90deg)}
+.ring circle{fill:none; stroke-width:11; stroke-linecap:round}
+.ring .bg{stroke:var(--surf2)}
+.ring .fg{stroke:var(--ok); transition:stroke-dashoffset .5s ease}
+.pstat{flex:1; min-width:200px}
+.pstat .big{font-size:2.1rem; font-weight:700; line-height:1.2; margin:0; text-align:start;
+  font-variant-numeric:tabular-nums}
+.pstat .cap{color:var(--mut); font-size:.9rem; margin:.15rem 0 0}
+.ringwrap{position:relative; display:grid; place-items:center}
+.ringwrap .pc{position:absolute; font-size:1.35rem; font-weight:700; font-variant-numeric:tabular-nums}
+.chbar{display:grid; grid-template-columns:64px 1fr 92px; gap:12px; align-items:center;
+  padding:.5rem 0; border-bottom:1px solid var(--rule); font-size:.9rem}
+.chbar:last-child{border-bottom:none}
+.chbar .nm{font-weight:700}
+.chbar .track{display:block; height:9px; border-radius:99px; background:var(--surf2); overflow:hidden}
+.chbar .fillc{display:block; height:100%; border-radius:99px; transition:width .5s ease}
+.chbar .num{text-align:end; color:var(--mut); font-variant-numeric:tabular-nums; font-size:.85rem}
+.weaklist{display:flex; flex-wrap:wrap; gap:6px; margin-top:.6rem}
+.weakchip{border:1px solid var(--warn-rule); background:var(--warn-w); color:var(--warn);
+  border-radius:99px; padding:.2rem .7rem; font-size:.84rem;
+  font-family:'Segoe UI',system-ui,'Helvetica Neue',Arial,sans-serif; direction:ltr; unicode-bidi:isolate}
+.weakchip:hover{background:var(--warn); color:var(--surf)}
+.card2{background:var(--surf); border:1px solid var(--rule); border-radius:14px;
+  padding:16px 20px; box-shadow:var(--shadow); margin-bottom:16px}
+.card2 h3{margin:.1rem 0 .6rem; font-size:1.02rem; font-weight:700}
+.danger{color:var(--red); border-color:var(--warn-rule)}
+
 /* ---------- drill ---------- */
 .drill{max-width:640px; margin:8px auto 0}
 .card{
@@ -157,8 +210,8 @@ select.vsel{
 .btn.pri:hover{opacity:.9; color:var(--acc-ink)}
 .btn.no{color:var(--warn); border-color:var(--warn-rule)}
 .prog{display:flex; align-items:center; gap:10px; margin:0 0 12px; font-size:.84rem; color:var(--mut)}
-.prog .track{flex:1; height:5px; background:var(--surf2); border-radius:99px; overflow:hidden}
-.prog .fill{height:100%; background:var(--acc); border-radius:99px; transition:width .3s ease}
+.prog .track{display:block; flex:1; height:5px; background:var(--surf2); border-radius:99px; overflow:hidden}
+.prog .fill{display:block; height:100%; background:var(--acc); border-radius:99px; transition:width .3s ease}
 .tally{font-variant-numeric:tabular-nums}
 
 /* ---------- misc ---------- */
@@ -195,6 +248,7 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-g" aria-selected="true">واژه‌نامه</button>
       <button class="tab" role="tab" id="tab-d" aria-selected="false">تمرین</button>
+      <button class="tab" role="tab" id="tab-p" aria-selected="false">پیشرفت</button>
     </div>
     <input class="search" id="q" type="search" placeholder="جست‌وجو: فارسی یا انگلیسی…" autocomplete="off">
     <span class="count" id="count"></span>
@@ -206,6 +260,11 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
     <button class="chip k3" data-ch="3" aria-pressed="false">فصل ۳</button>
     <button class="chip k4" data-ch="4" aria-pressed="false">فصل ۴</button>
     <button class="chip k5" data-ch="5" aria-pressed="false">فصل ۵</button>
+    <div class="stateseg" id="fstate" title="فیلتر وضعیت">
+      <button data-st="all" aria-pressed="true">همه</button>
+      <button data-st="new" aria-pressed="false">بلد نیستم</button>
+      <button data-st="done" aria-pressed="false">بلدم</button>
+    </div>
     <span class="vpick"><label for="vsel">صدا:</label><select class="vsel" id="vsel"></select><span class="flag" id="vflag"></span></span>
     <span style="flex:1"></span>
     <div class="seg hide" id="dir" title="جهت تمرین">
@@ -225,12 +284,51 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
     <ul>
       <li>اول دکمهٔ پخش را بزنید، بعد <b>با صدای بلند تکرار کنید</b> — تلفظ یک مهارت حرکتی است و با نگاه‌کردن ساخته نمی‌شود.</li>
       <li>دکمهٔ «آهسته» زیر هر واژه، همان واژه را با نصفِ سرعت می‌گوید؛ برای واژه‌های بلند مثل <span class="lat">phenylketonuria</span> اول آهسته، بعد عادی.</li>
+      <li>دکمهٔ <b>✓</b> کنار هر واژه یعنی «بلدم». در تبِ <b>پیشرفت</b> می‌بینید چند درصد پیش رفته‌اید — کلی و به تفکیک فصل. تمرین هم خودکار ثبت می‌شود.</li>
       <li>همهٔ آوانگاری‌های این صفحه <b>آمریکایی</b> است. با منوی «صدا» در نوار بالا می‌توانید لهجهٔ صدا را عوض کنید — برای هماهنگی با آوانگاری، صدایی را انتخاب کنید که کنارش «آمریکایی» نوشته شده. انتخابتان ذخیره می‌شود.</li>
       <li>در حالت <b>تمرین</b>، کلید <b>فاصله</b> کارت را برمی‌گرداند و کلید <b>S</b> صدا را پخش می‌کند.</li>
       <li>صدای موتور مرورگر برای اسم‌های خاص (<span class="lat">Purkinje</span>، <span class="lat">Cajal</span>) گاهی غلط است — برای این‌ها من تلفظ اصلاح‌شده را به موتور می‌دهم، ولی معیار نهایی همان IPA و جعبهٔ زرد است.</li>
     </ul>
   </div>
   <div id="list"></div>
+</section>
+
+<section id="view-p" class="hide">
+  <div class="phead">
+    <span class="ringwrap">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="bg" cx="60" cy="60" r="52"></circle>
+        <circle class="fg" cx="60" cy="60" r="52" id="ringfg"
+                stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+      </svg>
+      <span class="pc" id="ringpc">۰٪</span>
+    </span>
+    <div class="pstat">
+      <p class="big" id="pbig">۰ از ۲۲۱</p>
+      <p class="cap" id="pcap">هنوز واژه‌ای را علامت نزده‌اید.</p>
+    </div>
+  </div>
+
+  <div class="card2">
+    <h3>به تفکیک فصل</h3>
+    <div id="chbars"></div>
+  </div>
+
+  <div class="card2" id="weakcard">
+    <h3>واژه‌های دشوار</h3>
+    <p class="note" style="margin:0;padding:0;background:none;border:none">
+      واژه‌هایی که در تمرین بیش از یک بار اشتباه گفته‌اید. روی هرکدام بزنید تا بشنوید.
+    </p>
+    <div class="weaklist" id="weaklist"></div>
+  </div>
+
+  <div class="card2">
+    <h3>پاک کردن پیشرفت</h3>
+    <p class="note" style="margin:0 0 .6rem;padding:0;background:none;border:none">
+      همهٔ علامت‌ها را صفر می‌کند. برگشت‌پذیر نیست.
+    </p>
+    <button class="btn danger" id="reset">پاک کن</button>
+  </div>
 </section>
 
 <section id="view-d" class="hide">
@@ -249,7 +347,7 @@ footer{margin-top:38px; padding-top:18px; border-top:1px solid var(--rule); colo
 </section>
 
 <footer>
-  آوانگاری بر پایهٔ تلفظ آمریکایی (<span class="lat">General American</span>) است؛ در تلفظ بریتانیایی چند مورد فرق می‌کند — مهم‌ترینش این‌که «r» پس از مصوت (در <span class="lat">cortex, dorsal, receptor</span>) در آمریکایی تلفظ می‌شود و در بریتانیایی نه. هر دو درست‌اند؛ فقط قاطی‌شان نکنید. این فایل مستقل است — بدون اینترنت و بدون هیچ برنامهٔ دیگری باز می‌شود.
+  آوانگاری بر پایهٔ تلفظ آمریکایی (<span class="lat">General American</span>) است؛ در تلفظ بریتانیایی چند مورد فرق می‌کند — مهم‌ترینش این‌که «r» پس از مصوت (در <span class="lat">cortex, dorsal, receptor</span>) در آمریکایی تلفظ می‌شود و در بریتانیایی نه. هر دو درست‌اند؛ فقط قاطی‌شان نکنید. این فایل مستقل است — بدون اینترنت باز می‌شود و پیشرفت شما در همین مرورگر ذخیره می‌ماند.
   صدا از موتور گفتارِ خودِ مرورگر می‌آید و نیازی به اینترنت ندارد.
 </footer>
 </div>
@@ -540,13 +638,25 @@ function say(text, slow, btn){
   }catch(e){}
 }
 const SPK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 2v2.1a7.5 7.5 0 0 1 0 15.8V22a9.5 9.5 0 0 0 0-20z"/></svg>';
+const CHK='<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="4 12.5 9.5 18 20 6.5"/></svg>';
+
+/* ---------------- progress store ---------------- */
+let prog={};
+try{ prog=JSON.parse(localStorage.getItem('pron.prog')||'{}'); }catch(e){ prog={}; }
+function saveProg(){ try{ localStorage.setItem('pron.prog',JSON.stringify(prog)); }catch(e){} }
+function P(en){ return prog[en]||(prog[en]={k:0,m:0}); }
+function isKnown(en){ return !!(prog[en]&&prog[en].k); }
+function setKnown(en,v){ P(en).k=v?1:0; saveProg(); }
+function addMiss(en){ const p=P(en); p.k=0; p.m=(p.m||0)+1; saveProg(); }
 
 /* ---------------- state ---------------- */
-let mode='g', ch=0, q='';
+let mode='g', ch=0, q='', fstate='all';
 const $=(id)=>document.getElementById(id);
 
 function match(t){
   if(ch && t[4]!==ch) return false;
+  if(fstate==='done' && !isKnown(t[0])) return false;
+  if(fstate==='new'  &&  isKnown(t[0])) return false;
   if(!q) return true;
   const s=q.toLowerCase();
   return t[0].toLowerCase().includes(s)||t[3].includes(q)||(t[1]||'').includes(q);
@@ -563,7 +673,8 @@ function sylHTML(s){
 /* ---------------- glossary ---------------- */
 function renderList(){
   const items=D.filter(match);
-  $('count').textContent = FD(items.length)+' واژه';
+  const kn=D.filter(t=>isKnown(t[0])).length;
+  $('count').textContent = FD(items.length)+' واژه'+(kn?' · '+FD(kn)+' بلدم':'');
   if(!items.length){ $('list').innerHTML='<p class="empty">چیزی پیدا نشد.</p>'; return; }
   let html='', last=-1;
   items.forEach((t,i)=>{
@@ -572,20 +683,34 @@ function renderList(){
       html+=`<div class="grp"><span class="bead" style="background:var(--c${last})"></span><b style="color:var(--c${last})">فصل ${CH[last]}</b><span class="line"></span></div>`;
     }
     const idx=D.indexOf(t);
-    html+=`<div class="term g${t[4]}">
+    const kd=isKnown(t[0]), wk=(prog[t[0]]&&prog[t[0]].m>=2&&!kd);
+    html+=`<div class="term g${t[4]}${kd?' done':''}${wk?' weak':''}">
       <button class="play" data-i="${idx}" aria-label="پخش تلفظ ${t[0]}">${SPK}</button>
       <div>
         <div class="head"><span class="en">${t[0]}</span><span class="syl">${sylHTML(t[2])}</span></div>
         <div class="phon"><span class="ipa">/${t[1]}/</span><button class="slow" data-s="${idx}">آهسته</button></div>
         <div class="fa">${t[3]}</div>
         ${t[5]?`<div class="trap"><b>دام:</b> ${t[5]}</div>`:''}
-      </div></div>`;
+      </div>
+      <button class="mark" data-m="${idx}" aria-pressed="${kd}" title="${kd?'بلدم — برای برداشتن بزنید':'علامت بزنید: بلدم'}" aria-label="علامت بلدم برای ${t[0]}">${CHK}</button>
+      </div>`;
   });
   $('list').innerHTML=html;
 }
 $('list').addEventListener('click',e=>{
   const p=e.target.closest('.play'); if(p){ const t=D[+p.dataset.i]; say(t[6]||t[0],false,p); return; }
-  const s=e.target.closest('.slow'); if(s){ const t=D[+s.dataset.s]; say(t[6]||t[0],true,null); }
+  const s=e.target.closest('.slow'); if(s){ const t=D[+s.dataset.s]; say(t[6]||t[0],true,null); return; }
+  const m=e.target.closest('.mark'); if(m){
+    const t=D[+m.dataset.m];
+    setKnown(t[0], !isKnown(t[0]));
+    if(fstate==='all'){
+      const row=m.closest('.term'), on=isKnown(t[0]);
+      m.setAttribute('aria-pressed',on); row.classList.toggle('done',on);
+      if(on) row.classList.remove('weak');
+      const kn=D.filter(x=>isKnown(x[0])).length;
+      $('count').textContent = FD(D.filter(match).length)+' واژه'+(kn?' · '+FD(kn)+' بلدم':'');
+    } else renderList();
+  }
 });
 
 /* ---------------- drill ---------------- */
@@ -635,22 +760,73 @@ function paint(){
   const b=$('show'); if(b) b.onclick=()=>{ shown=true; paint(); if(dir==='fa') say(t[6]||t[0],false,null); };
   const h2=$('hear2'); if(h2) h2.onclick=e=>say(t[6]||t[0],false,e.currentTarget);
   const h=$('hear'); if(h) h.onclick=e=>say(t[6]||t[0],false,e.currentTarget);
-  const y=$('yep'); if(y) y.onclick=()=>{ ok++; next(); };
-  const n=$('nope'); if(n) n.onclick=()=>{ bad++; queue.push(cur); total++; next(); };
+  const y=$('yep'); if(y) y.onclick=()=>{ ok++; setKnown(t[0],true); next(); };
+  const n=$('nope'); if(n) n.onclick=()=>{ bad++; addMiss(t[0]); queue.push(cur); total++; next(); };
 }
+
+/* ---------------- progress view ---------------- */
+const CHN=[0,0,0,0,0,0]; D.forEach(t=>CHN[t[4]]++);
+function renderProg(){
+  const known=D.filter(t=>isKnown(t[0])).length, tot=D.length;
+  const pct = tot? Math.round(known/tot*100) : 0;
+  const C=2*Math.PI*52;
+  $('ringfg').setAttribute('stroke-dasharray',C.toFixed(1));
+  $('ringfg').setAttribute('stroke-dashoffset',(C*(1-known/tot)).toFixed(1));
+  $('ringpc').textContent=FD(pct)+'٪';
+  $('pbig').textContent=FD(known)+' از '+FD(tot);
+  const left=tot-known;
+  $('pcap').textContent = known===0 ? 'هنوز واژه‌ای را علامت نزده‌اید. با دکمهٔ ✓ کنار هر واژه یا با تمرین، پیشرفتتان ثبت می‌شود.'
+    : known===tot ? 'هر ۲۲۱ واژه را بلدید. حالا نوبت مرور فاصله‌دار است.'
+    : FD(left)+' واژه مانده — با فیلتر «بلد نیستم» فقط همان‌ها را تمرین کنید.';
+
+  let h='';
+  for(let c=1;c<=5;c++){
+    const inCh=D.filter(t=>t[4]===c), k=inCh.filter(t=>isKnown(t[0])).length;
+    const p=inCh.length? Math.round(k/inCh.length*100):0;
+    h+=`<div class="chbar">
+      <span class="nm" style="color:var(--c${c})">فصل ${CH[c]}</span>
+      <span class="track"><span class="fillc" style="width:${p}%;background:var(--c${c})"></span></span>
+      <span class="num">${FD(k)} از ${FD(inCh.length)} · ${FD(p)}٪</span>
+    </div>`;
+  }
+  $('chbars').innerHTML=h;
+
+  const weak=D.filter(t=>prog[t[0]] && prog[t[0]].m>=2 && !isKnown(t[0]))
+              .sort((a,b)=>prog[b[0]].m-prog[a[0]].m).slice(0,40);
+  $('weakcard').classList.toggle('hide',!weak.length);
+  $('weaklist').innerHTML = weak.map(t=>
+    `<button class="weakchip" data-w="${D.indexOf(t)}">${t[0]} <span style="opacity:.7">×${FD(prog[t[0]].m)}</span></button>`).join('');
+}
+$('weaklist').addEventListener('click',e=>{
+  const w=e.target.closest('.weakchip'); if(!w) return;
+  const t=D[+w.dataset.w]; say(t[6]||t[0],false,null);
+});
+let armed=false;
+$('reset').onclick=function(){
+  if(!armed){ armed=true; this.textContent='مطمئنید؟ دوباره بزنید'; setTimeout(()=>{armed=false; this.textContent='پاک کن';},4000); return; }
+  prog={}; saveProg(); armed=false; this.textContent='پاک شد'; setTimeout(()=>this.textContent='پاک کن',1500);
+  renderProg();
+};
 
 /* ---------------- wiring ---------------- */
 function setMode(m){
   mode=m;
-  $('tab-g').setAttribute('aria-selected',m==='g');
-  $('tab-d').setAttribute('aria-selected',m==='d');
-  $('view-g').classList.toggle('hide',m!=='g');
-  $('view-d').classList.toggle('hide',m!=='d');
+  ['g','d','p'].forEach(x=>{
+    $('tab-'+x).setAttribute('aria-selected',m===x);
+    $('view-'+x).classList.toggle('hide',m!==x);
+  });
   $('dir').classList.toggle('hide',m!=='d');
-  if(m==='d') startDrill(); else renderList();
+  $('fstate').classList.toggle('hide',m==='p');
+  if(m==='d') startDrill(); else if(m==='p') renderProg(); else renderList();
 }
 $('tab-g').onclick=()=>setMode('g');
 $('tab-d').onclick=()=>setMode('d');
+$('tab-p').onclick=()=>setMode('p');
+document.querySelectorAll('#fstate button').forEach(b=>b.onclick=()=>{
+  fstate=b.dataset.st;
+  document.querySelectorAll('#fstate button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  mode==='d'?startDrill():renderList();
+});
 document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
   ch=+c.dataset.ch;
   document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===c));
